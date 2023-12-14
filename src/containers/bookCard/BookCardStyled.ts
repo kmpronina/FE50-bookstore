@@ -1,12 +1,12 @@
+import styled from 'styled-components';
 import {
   blue,
   green,
   orange,
   purple,
-  gray80,
+  gray60,
   black,
 } from '#styles/colorsConstants';
-import styled from 'styled-components';
 
 export const BookCardStyled = styled.div`
   width: 352px;
@@ -14,22 +14,32 @@ export const BookCardStyled = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: start;
+  margin: 0 5px;
   margin-bottom: 20px;
 `;
 
-export const ImgWrapper = styled.div<{ color: string }>`
+export const ClickableArea = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+  margin: 0 5px;
+  cursor: pointer;
+`;
+export const ImgWrapper = styled.div<{ $color: string }>`
   width: 100%;
   height: 264px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  background-color: ${({ color }) =>
-    color === 'green'
+  background-color: ${(props) =>
+    props.$color === 'green'
       ? green
-      : color === 'blue'
+      : props.$color === 'blue'
       ? blue
-      : color === 'orange'
+      : props.$color === 'orange'
       ? orange
       : purple};
 `;
@@ -48,6 +58,8 @@ export const BookTitle = styled.h4`
   line-height: 32px;
   height: 64px;
   margin-bottom: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: ${black};
 `;
 
@@ -56,8 +68,10 @@ export const BookSubtitle = styled.span`
   font-weight: 400;
   line-height: 24px;
   margin-bottom: 10px;
-  color: ${gray80};
+  color: ${gray60};
   height: 72px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const InfoArea = styled.div`

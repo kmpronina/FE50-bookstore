@@ -24,6 +24,7 @@ export const HeaderTitle = styled.h1`
   font-size: 36px;
   font-weight: 700;
   line-height: 44px;
+  cursor: pointer;
   color: ${black};
 `;
 
