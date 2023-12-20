@@ -7,6 +7,7 @@ body {
   text-decoration: none;
   position: relative;
   font-family: system-ui;
+  transition: 0.2s;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

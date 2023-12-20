@@ -26,6 +26,11 @@ type ThemeColorType = {
   inputBorderColor: string;
   buttonBgHoverColor: string;
   iconButtonColor: string;
+  ratingColor: string;
+  paginationButtonColor: string;
+  paginationButtonActiveColor: string;
+  inactiveTabButton: string;
+  redColor: string;
 };
 
 type ThemeVariant = {
@@ -36,7 +41,7 @@ type ThemeVariant = {
 export const colors: ThemeVariant = {
   light: {
     backgroundColor: white,
-    cardBgColor: blue,
+    cardBgColor: white,
     textColorBlack: black,
     textColorGray: gray80,
     titleColor: black,
@@ -48,6 +53,11 @@ export const colors: ThemeVariant = {
     inputBorderColor: gray40,
     inputTextColor: gray80,
     iconButtonColor: black,
+    ratingColor: gray80,
+    paginationButtonColor: gray40,
+    paginationButtonActiveColor: black,
+    inactiveTabButton: gray60,
+    redColor: red,
   },
   dark: {
     backgroundColor: black,
@@ -63,5 +73,10 @@ export const colors: ThemeVariant = {
     inputBorderColor: gray80,
     inputTextColor: white,
     iconButtonColor: white,
+    ratingColor: gray80,
+    paginationButtonColor: gray80,
+    paginationButtonActiveColor: white,
+    inactiveTabButton: gray40,
+    redColor: red,
   },
 };

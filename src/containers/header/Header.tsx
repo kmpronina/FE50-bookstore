@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Divider, IconButton, Tooltip } from '@mui/material';
 import {
   HeaderWrapper,
@@ -13,17 +14,29 @@ import {
   Person2Outlined,
 } from '@mui/icons-material';
 import useThemeColors from '#hooks/useThemeColors';
+import { RouterLocationsEnum } from '#router/Router';
 
 const Header: React.FC = () => {
+  const navigate = useNavigate();
   const { iconButtonColor, inputBorderColor } = useThemeColors();
+
   return (
     <HeaderWrapper>
       <HeaderStyled>
-        <HeaderTitle>bookstore</HeaderTitle>
+        <Tooltip title="Go to main page">
+          <HeaderTitle onClick={() => navigate(RouterLocationsEnum.main)}>
+            bookstore
+          </HeaderTitle>
+        </Tooltip>
         <SearchInput />
         <InteractionArea>
           <Tooltip title="Favorite books">
-            <IconButton sx={{ color: iconButtonColor }}>
+            <IconButton
+              onClick={() => {
+                navigate(RouterLocationsEnum.favorite);
+              }}
+              sx={{ color: iconButtonColor }}
+            >
               <FavoriteBorderOutlined />
             </IconButton>
           </Tooltip>
@@ -39,7 +52,9 @@ const Header: React.FC = () => {
           </Tooltip>
         </InteractionArea>
       </HeaderStyled>
-      <Divider sx={{ width: '100%', color: inputBorderColor }} />
+      <Divider
+        sx={{ width: '100%', color: inputBorderColor, marginBottom: '20px' }}
+      />
     </HeaderWrapper>
   );
 };

@@ -6,6 +6,9 @@ export enum RouterLocationsEnum {
   main = '/',
   signIn = '/sign-in',
   signUp = '/sign-up',
+  book = '/:isbn13',
+  search = '/search',
+  favorite = '/favorite',
 }
 
 const Router: React.FC = () => {
