@@ -6,7 +6,7 @@ import {
   ResponseNewBooksDataType,
   SearchResultDataType,
   ResponseSearchResultDataType,
-} from '#models/BookType';
+} from '#models/bookTypes';
 
 const random = () => {
   return Math.floor(Math.random() * 10);
@@ -28,8 +28,6 @@ export const getBooksData = async (): Promise<BookDataType | false> => {
       price: book.price,
       image: book.image,
       url: book.url,
-      isLiked: false,
-      isInCart: false,
       rating: random(),
       color:
         random() > 3
@@ -66,8 +64,6 @@ export const getActiveBookInfo = async (
     price: data.price,
     image: data.image,
     url: data.url,
-    isLiked: false,
-    isInCart: false,
     pdf: data.pdf,
     color:
       random() > 3
@@ -77,6 +73,7 @@ export const getActiveBookInfo = async (
         : random() > 7
         ? 'green'
         : 'purple',
+    numberOfItemsInCart: 0,
   };
   return customData;
 };
@@ -102,8 +99,6 @@ export const getSearchResultData = async (
       price: book.price,
       image: book.image,
       url: book.url,
-      isLiked: false,
-      isInCart: false,
       rating: random(),
       color:
         random() > 3

@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollingCarousel } from '@trendyol-js/react-carousel';
 import useThemeColors from '#hooks/useThemeColors';
-import { BookType } from '#models/BookType';
+import { BookType } from '#models/bookTypes';
 import { useAppSelector } from '#store/store';
 import BookCard from '#containers/bookCard';
 import { SliderStyled, SliderTitle } from './SliderStyled';

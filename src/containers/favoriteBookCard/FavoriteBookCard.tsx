@@ -1,5 +1,5 @@
 import useThemeColors from '#hooks/useThemeColors';
-import { ActiveBookInfoType } from '#models/BookType';
+import { ActiveBookInfoType } from '#models/bookTypes';
 import {
   setActiveBookByISBN,
   setFavoriteBookToStore,
@@ -64,9 +64,9 @@ const FavoriteBookCard: React.FC<Props> = (props) => {
   return (
     <FavoriteBookCardWrapper>
       <FavoriteBookCardStyled>
-        <InfoWrapper onClick={handleGoToBookPage}>
-          <ImgWrapper $bgColor={book.color}>
-            <BookImg src={book.image} alt="Favorite book" />
+        <InfoWrapper>
+          <ImgWrapper $bgColor={book.color} onClick={handleGoToBookPage}>
+            <BookImg src={book.image} alt={book.title} />
           </ImgWrapper>
           <TextInfoWrapper>
             <BookTitle $color={textColorBlack}>{book.title}</BookTitle>

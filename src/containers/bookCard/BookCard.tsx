@@ -4,7 +4,7 @@ import { Rating } from '@mui/material';
 import useThemeColors from '#hooks/useThemeColors';
 import { useAppDispatch } from '#store/store';
 
-import { BookType } from '#models/BookType';
+import { BookType } from '#models/bookTypes';
 import {
   BookCardStyled,
   BookImg,

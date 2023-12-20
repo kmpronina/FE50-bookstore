@@ -11,8 +11,6 @@ export const BookInfoStyled = styled.div`
   align-items: start;
 `;
 
-export const ErrorInfo = styled.span``;
-
 export const ImgAndPriceWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -71,6 +69,13 @@ export const LikeButton = styled.button<{
   }
   &:active {
     background-color: ${(props) => props.$color};
+  }
+  &:disabled {
+    cursor: not-allowed;
+    color: ${(props) => props.$hoverColor};
+    &:hover {
+      background-color: ${(props) => props.$color};
+    }
   }
 `;
 
@@ -148,6 +153,11 @@ export const LinkToChapter = styled.a<{ $color: string }>`
   }
 `;
 
+export const InfoTabsArea = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const DescriptionWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -166,6 +176,7 @@ export const TabButton = styled.button<{
   $colorInactive: string;
 }>`
   all: unset;
+  cursor: pointer;
   padding: 0 15px;
   color: ${(props) =>
     props.$isActive ? props.$colorActive : props.$colorInactive};
@@ -175,6 +186,9 @@ export const TabButton = styled.button<{
   text-transform: capitalize;
   transition: 0.2s;
   border-bottom: ${(props) => (props.$isActive ? '1px solid black' : 'none')};
+  &:hover {
+    color: ${(props) => props.$colorActive};
+  }
 `;
 
 export const Description = styled.div<{ $color: string }>`
@@ -183,6 +197,7 @@ export const Description = styled.div<{ $color: string }>`
   font-size: 16px;
   font-weight: 400;
   line-height: 32px;
+  min-height: 100px;
 `;
 
 export const InteractionButtonWrapper = styled.div`

@@ -2,8 +2,7 @@ import { black } from '#styles/colorsConstants';
 import styled from 'styled-components';
 
 export const HeaderWrapper = styled.header`
-  padding: 0 -15px;
-  margin: 24px 0;
+  margin: 0 0 24px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,6 +14,7 @@ export const HeaderStyled = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding-top: 24px;
   margin-bottom: 24px;
 `;
 

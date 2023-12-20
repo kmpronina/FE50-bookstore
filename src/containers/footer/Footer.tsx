@@ -5,7 +5,7 @@ import { FooterInfo, FooterStyled } from './FooterStyled';
 import { Copyright } from '@mui/icons-material';
 
 const Footer: React.FC = () => {
-  const { inputBorderColor } = useThemeColors();
+  const { inputBorderColor, textColorGray } = useThemeColors();
 
   return (
     <>
@@ -13,11 +13,11 @@ const Footer: React.FC = () => {
         sx={{ width: '100%', color: inputBorderColor, marginBottom: '30px' }}
       />
       <FooterStyled>
-        <FooterInfo>
+        <FooterInfo $color={textColorGray}>
           <Copyright />
           {new Date().getFullYear()} Bookstore
         </FooterInfo>
-        <FooterInfo>All rights reserved</FooterInfo>
+        <FooterInfo $color={textColorGray}>All rights reserved</FooterInfo>
       </FooterStyled>
     </>
   );

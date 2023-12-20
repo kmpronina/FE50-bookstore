@@ -24,13 +24,13 @@ export const InfoWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  cursor: pointer;
 `;
 
 export const ImgWrapper = styled.div<{
   $bgColor: 'blue' | 'orange' | 'purple' | 'green';
 }>`
   width: 20%;
+  cursor: pointer;
   display: flex;
   padding: 0 45px;
   justify-content: space-between;

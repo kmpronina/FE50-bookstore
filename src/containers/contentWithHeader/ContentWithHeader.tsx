@@ -1,7 +1,10 @@
 import React, { PropsWithChildren } from 'react';
 import Header from '#containers/header';
-import { ContentWithHeaderStyled } from './ContentWithHeaderStyled';
 import Footer from '#containers/footer';
+import {
+  CildrenWrapper,
+  ContentWithHeaderStyled,
+} from './ContentWithHeaderStyled';
 
 interface Props extends PropsWithChildren {}
 
@@ -10,7 +13,7 @@ const ContentWithHeader: React.FC<Props> = (props) => {
   return (
     <ContentWithHeaderStyled>
       <Header />
-      {children}
+      <CildrenWrapper>{children}</CildrenWrapper>
       <Footer />
     </ContentWithHeaderStyled>
   );

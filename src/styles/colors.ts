@@ -43,7 +43,7 @@ export const colors: ThemeVariant = {
     backgroundColor: white,
     cardBgColor: white,
     textColorBlack: black,
-    textColorGray: gray80,
+    textColorGray: gray60,
     titleColor: black,
     buttonBgColor: black,
     buttonBgHoverColor: gray80,

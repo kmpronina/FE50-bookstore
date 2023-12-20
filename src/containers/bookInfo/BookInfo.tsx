@@ -1,92 +1,66 @@
 import React, { useEffect, useState } from 'react';
-import { Divider, IconButton, Rating } from '@mui/material';
-import {
-  FacebookOutlined,
-  FavoriteBorder,
-  HeartBrokenOutlined,
-  MoreHoriz,
-  Twitter,
-} from '@mui/icons-material';
+import { FavoriteBorder, HeartBrokenOutlined } from '@mui/icons-material';
 import { useAppDispatch, useAppSelector } from '#store/store';
+import { setFavoriteBookToStore } from '#store/reducers/bookReducer';
+import useThemeColors from '#hooks/useThemeColors';
+import { ActiveBookInfoType } from '#models/bookTypes';
+import PageTitle from '#components/pageTitle';
 import {
   BookInfoWrapper,
   BookInfoStyled,
-  ErrorInfo,
   ImgAndPriceWrapper,
   ImgWrapper,
   BookImg,
-  PriceCard,
-  Price,
-  NumbersLine,
-  DetailArea,
-  DetailRow,
-  DetailName,
-  DetailValue,
-  LinkToChapter,
-  TabsWrapper,
-  TabButton,
-  DescriptionWrapper,
-  Description,
-  InteractionButtonWrapper,
   LikeButton,
 } from './BookInfoStyled';
-import useThemeColors from '#hooks/useThemeColors';
-import PageTitle from '#components/pageTitle';
-import Button from '#ui/button';
-import { setFavoriteBookToStore } from '#store/reducers/bookReducer';
-import { ActiveBookInfoType } from '#models/BookType';
+import InfoTabs from './InfoTabs';
+import PriceCard from './PriceCard';
+import { Tooltip } from '@mui/material';
+import InfoMessage from '#ui/infoMessage';
 
 const BookInfo: React.FC = () => {
-  const { activeBookInfo, favoriteBooks } = useAppSelector(
+  const { activeBookInfo, favoriteBooks, booksInCart } = useAppSelector(
     (state) => state.bookReducer
   );
-  const {
-    titleColor,
-    ratingColor,
-    textColorBlack,
-    textColorGray,
-    inputBorderColor,
-    inactiveTabButton,
-    buttonBgColor,
-    buttonBgHoverColor,
-    backgroundColor,
-    redColor,
-  } = useThemeColors();
+  const { activeUser } = useAppSelector((state) => state.userReducer);
+
+  const { buttonBgColor, buttonBgHoverColor, backgroundColor, redColor } =
+    useThemeColors();
 
   const dispatch = useAppDispatch();
 
   const [linkToBook, setLinkToBook] = useState<string | null>(null);
-  const [activeTabId, setActiveTabId] = useState<string>('1');
   const [isLikedStatusFromStore, setIsLikedStatusFromStore] =
+    useState<boolean>(false);
+  const [isInCartStatusFromStore, setIsInCartStatusFromStore] =
     useState<boolean>(false);
 
   useEffect(() => {
     setLinkToBook(null);
     setIsLikedStatusFromStore(false);
+    setIsInCartStatusFromStore(false);
+
     if (!activeBookInfo) return;
-    if (favoriteBooks.find((book) => book.isbn13 === activeBookInfo.isbn13)) {
-      console.log(activeBookInfo.isbn13);
+
+    if (
+      favoriteBooks.find(
+        (book: ActiveBookInfoType) => book.isbn13 === activeBookInfo.isbn13
+      )
+    ) {
       setIsLikedStatusFromStore(true);
+    }
+
+    if (
+      booksInCart.find(
+        (book: ActiveBookInfoType) => book.isbn13 === activeBookInfo.isbn13
+      )
+    ) {
+      setIsInCartStatusFromStore(true);
     }
 
     if (activeBookInfo.pdf === undefined) return;
     setLinkToBook(Object.values(activeBookInfo.pdf)[0]);
-  }, [activeBookInfo, favoriteBooks]);
-
-  const detailsNames = activeBookInfo && [
-    { name: 'author', value: activeBookInfo.authors },
-    { name: 'publisher', value: activeBookInfo.publisher },
-    { name: 'year', value: activeBookInfo.year },
-    { name: 'pages', value: activeBookInfo.pages },
-  ];
-
-  const tabsItems = [
-    { id: '1', name: 'description' },
-    { id: '2', name: 'authors' },
-    { id: '3', name: 'reviews' },
-  ];
-
-  const handleAddToCart = () => {};
+  }, [activeBookInfo, favoriteBooks, booksInCart]);
 
   const toggleLikeStatus = () => {
     if (!activeBookInfo) return;
@@ -105,7 +79,7 @@ const BookInfo: React.FC = () => {
       );
     } else {
       setIsLikedStatusFromStore(true);
-      favoriteBooksClone.push(activeBookInfo);
+      favoriteBooksClone.unshift(activeBookInfo);
       dispatch(setFavoriteBookToStore(favoriteBooksClone));
     }
   };
@@ -113,122 +87,44 @@ const BookInfo: React.FC = () => {
   return (
     <BookInfoWrapper>
       {activeBookInfo === null ? (
-        <ErrorInfo>Server error. Please try again later</ErrorInfo>
+        <InfoMessage>Server error. Please try again later</InfoMessage>
       ) : activeBookInfo.error !== '0' ? (
-        <ErrorInfo>{activeBookInfo.error} </ErrorInfo>
+        <InfoMessage>{activeBookInfo.error} </InfoMessage>
       ) : (
         <BookInfoStyled>
           <PageTitle>{activeBookInfo.title}</PageTitle>
           <ImgAndPriceWrapper>
             <ImgWrapper $bgColor={activeBookInfo.color}>
-              <LikeButton
-                $color={buttonBgColor}
-                $hoverColor={buttonBgHoverColor}
-                $iconColor={backgroundColor}
-                $isLiked={isLikedStatusFromStore}
-                $red={redColor}
-                onClick={toggleLikeStatus}
+              <Tooltip
+                title={
+                  activeUser ? 'Add to favorites' : 'Sing in to use favorites'
+                }
               >
-                {isLikedStatusFromStore ? (
-                  <HeartBrokenOutlined />
-                ) : (
-                  <FavoriteBorder />
-                )}
-              </LikeButton>
+                <LikeButton
+                  $color={buttonBgColor}
+                  $hoverColor={buttonBgHoverColor}
+                  $iconColor={backgroundColor}
+                  $isLiked={isLikedStatusFromStore}
+                  $red={redColor}
+                  onClick={toggleLikeStatus}
+                  disabled={!activeUser}
+                >
+                  {isLikedStatusFromStore ? (
+                    <HeartBrokenOutlined />
+                  ) : (
+                    <FavoriteBorder />
+                  )}
+                </LikeButton>
+              </Tooltip>
               <BookImg src={activeBookInfo.image} />
             </ImgWrapper>
-
-            <PriceCard>
-              <Divider
-                sx={{
-                  width: '100%',
-                  color: inputBorderColor,
-                  marginBottom: '15px',
-                }}
-              />
-              <NumbersLine>
-                <Price $color={titleColor}>{activeBookInfo.price}</Price>
-                <Rating
-                  value={Number(activeBookInfo.rating)}
-                  sx={{ color: ratingColor }}
-                  readOnly
-                />
-              </NumbersLine>
-              <DetailArea>
-                {detailsNames &&
-                  detailsNames.map((item) => (
-                    <DetailRow>
-                      <DetailName $color={textColorGray}>
-                        {item.name}
-                      </DetailName>
-                      <DetailValue $color={textColorBlack}>
-                        {item.value}
-                      </DetailValue>
-                    </DetailRow>
-                  ))}
-              </DetailArea>
-              <Button
-                type="button"
-                width="calc(100% - 80px)"
-                onClick={handleAddToCart}
-              >
-                add to cart
-              </Button>
-              {linkToBook !== null && (
-                <LinkToChapter href={linkToBook} $color={textColorBlack}>
-                  prewiew book
-                </LinkToChapter>
-              )}
-            </PriceCard>
-          </ImgAndPriceWrapper>{' '}
-          <DescriptionWrapper>
-            <TabsWrapper>
-              {tabsItems.map((item) => (
-                <TabButton
-                  key={item.id}
-                  id={item.id}
-                  onClick={() => setActiveTabId(item.id)}
-                  $isActive={activeTabId === item.id}
-                  $colorActive={textColorBlack}
-                  $colorInactive={inactiveTabButton}
-                >
-                  {item.name}
-                </TabButton>
-              ))}
-            </TabsWrapper>
-            <Divider
-              sx={{
-                width: '100%',
-                color: inputBorderColor,
-                marginBottom: '30px',
-              }}
+            <PriceCard
+              book={activeBookInfo}
+              linkToBook={linkToBook}
+              isInCartStatus={isInCartStatusFromStore}
             />
-            <Description $color={textColorBlack}>
-              {activeTabId === tabsItems[0].id && <>{activeBookInfo.desc}</>}
-              {activeTabId === tabsItems[1].id && <>{activeBookInfo.authors}</>}
-              {activeTabId === tabsItems[2].id && (
-                <>
-                  This free book, or really a "coursebook" for a college
-                  freshman-level class, has been updated for Spring 2014 and
-                  provides an introduction to programming and problem solving
-                  using both Matlab and Mathcad. We provide a balanced selection
-                  of introductory exercises and real-world problems (i.e. no
-                  "contrived" problems).
-                </>
-              )}
-            </Description>
-          </DescriptionWrapper>
-          <InteractionButtonWrapper>
-            <IconButton sx={{ color: textColorBlack }}>
-              <FacebookOutlined />
-            </IconButton>
-            <IconButton sx={{ color: textColorBlack }}>
-              <Twitter />
-            </IconButton>
-            <IconButton sx={{ color: textColorBlack }}>
-              <MoreHoriz />
-            </IconButton>
-          </InteractionButtonWrapper>
+          </ImgAndPriceWrapper>
+          <InfoTabs book={activeBookInfo} />
         </BookInfoStyled>
       )}
     </BookInfoWrapper>

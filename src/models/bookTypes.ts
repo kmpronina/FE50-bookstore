@@ -14,8 +14,6 @@ export type BookType = {
   price: string;
   image: string;
   url: string;
-  isLiked: boolean;
-  isInCart: boolean;
   color: 'blue' | 'orange' | 'purple' | 'green';
   rating: number;
 };
@@ -65,11 +63,9 @@ export type ActiveBookInfoType = {
   price: string;
   image: string;
   url: string;
-  isLiked: boolean;
-  isInCart: boolean;
   color: 'blue' | 'orange' | 'purple' | 'green';
-
   pdf: object;
+  numberOfItemsInCart: number;
 };
 
 export type ResponseSearchResultDataType = {
