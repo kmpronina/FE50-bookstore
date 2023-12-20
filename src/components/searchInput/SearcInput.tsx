@@ -1,5 +1,5 @@
 import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IconButton, InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import useThemeColors from '#hooks/useThemeColors';
@@ -10,23 +10,24 @@ import {
   setSearchStringToStore,
 } from '#store/reducers/bookReducer';
 import { getSearchResultDataAction } from '#store/reducers/bookReducer/actions';
-import { BookType } from '#models/BookType';
+import { BookType } from '#models/bookTypes';
+import { RouterLocationsEnum } from '#router/Router';
 import {
-  BookImage,
-  BookTitle,
   DropWrapper,
-  SearchedBookCard,
-  SearchedBookImageWrapper,
+  GoToSearchResultButton,
   SearchedBooksDropWrapper,
   SearchInputStyled,
   SearchWrapper,
 } from './SearchInputStyled';
+import DropdownCard from './DropdownCard';
 
 const SearchInput: React.FC = () => {
   const { searcResultData, searchString } = useAppSelector(
     (state) => state.bookReducer
   );
+
   const dispatch = useAppDispatch();
+  const navigation = useNavigate();
 
   const { inputBgActiveColor, inputBorderColor, inputBgColor, inputTextColor } =
     useThemeColors();
@@ -38,11 +39,12 @@ const SearchInput: React.FC = () => {
   const debouncedValue = useDebounce(searchValue);
 
   useEffect(() => {
-    console.log('debouced', debouncedValue);
+    if (!debouncedValue) return;
     dispatch(setSearchStringToStore(debouncedValue));
-  }, [debouncedValue, dispatch]);
+  }, [debouncedValue]);
 
   useEffect(() => {
+    if (!searchString) return;
     dispatch(getSearchResultDataAction(searchString, '1'));
   }, [searchString]);
 
@@ -51,9 +53,14 @@ const SearchInput: React.FC = () => {
   }, [searcResultData]);
 
   const handleInputChange = (e: BaseSyntheticEvent) => {
+    if (!e.target.value) return;
     setSearchValue(e.target.value);
     setIsDropdownActive(true);
-    console.log('serached', searchValue);
+  };
+
+  const handleSearchSubmit = () => {
+    setIsDropdownActive(false);
+    navigation(RouterLocationsEnum.search);
   };
 
   return (
@@ -66,11 +73,18 @@ const SearchInput: React.FC = () => {
         $inputBgColor={inputBgColor}
       >
         <InputBase
+          value={searchValue}
           sx={{ ml: 1, flex: 1 }}
           placeholder="Search"
           onChange={handleInputChange}
         />
-        <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+        <IconButton
+          type="button"
+          sx={{ p: '10px' }}
+          aria-label="search"
+          disabled={!(searchValue.length > 0)}
+          onClick={handleSearchSubmit}
+        >
           <SearchIcon />
         </IconButton>
       </SearchInputStyled>
@@ -79,7 +93,6 @@ const SearchInput: React.FC = () => {
           {searchedBooks.length === 0 && (
             <>There are no books for the search term '{searchString}'</>
           )}
-
           {searchedBooks.length > 0 && (
             <SearchedBooksDropWrapper>
               {searchedBooks.slice(0, 5).map((book: BookType) => (
@@ -88,19 +101,30 @@ const SearchInput: React.FC = () => {
                   onClick={() => [
                     setIsDropdownActive(false),
                     dispatch(setActiveBookByISBN(book.isbn13)),
+                    setSearchValue(''),
                   ]}
                   style={{ all: 'unset' }}
+                  key={book.isbn13}
                 >
-                  <SearchedBookCard>
-                    <SearchedBookImageWrapper $bgColor={book.color}>
-                      <BookImage src={book.image} alt="book" />
-                    </SearchedBookImageWrapper>
-                    <BookTitle>{book.title}</BookTitle>
-                  </SearchedBookCard>
+                  {searchString && (
+                    <DropdownCard
+                      key={book.isbn13}
+                      book={book}
+                      searchValue={searchString}
+                    />
+                  )}
                 </Link>
               ))}
             </SearchedBooksDropWrapper>
-          )}
+          )}{' '}
+          <GoToSearchResultButton
+            $textColor={inputTextColor}
+            $bgColor={inputBgColor}
+            $hoverBgColor={inputBgActiveColor}
+            onClick={handleSearchSubmit}
+          >
+            all results
+          </GoToSearchResultButton>
         </DropWrapper>
       )}
     </SearchWrapper>

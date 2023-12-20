@@ -3,26 +3,28 @@ import {
   ActiveBookInfoType,
   BookDataType,
   SearchResultDataType,
-} from '#models/BookType';
+} from '#models/bookTypes';
 
 type BookReducerType = {
   booksData: BookDataType;
-  searchString: string;
+  searchString: string | null;
   activeBookISBN: string | null;
   activeBookInfo: ActiveBookInfoType | null;
   searcResultData: SearchResultDataType | null;
   favoriteBooks: ActiveBookInfoType[];
+  booksInCart: ActiveBookInfoType[];
 };
 
 const bookReducer = createSlice({
   name: 'book',
   initialState: {
     booksData: { books: [], error: '', total: '' },
-    searchString: '',
+    searchString: null,
     activeBookISBN: null,
     activeBookInfo: null,
     searcResultData: null,
     favoriteBooks: [],
+    booksInCart: [],
   } as BookReducerType,
 
   reducers: {
@@ -44,6 +46,9 @@ const bookReducer = createSlice({
     setFavoriteBookToStore: (state, action) => {
       state.favoriteBooks = action.payload;
     },
+    setBookInCartToStore: (state, action) => {
+      state.booksInCart = action.payload;
+    },
   },
 });
 
@@ -54,6 +59,7 @@ export const {
   setSearchStringToStore,
   setSearchResultToStore,
   setFavoriteBookToStore,
+  setBookInCartToStore,
 } = bookReducer.actions;
 
 export default bookReducer.reducer;

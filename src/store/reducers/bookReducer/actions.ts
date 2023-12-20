@@ -1,17 +1,15 @@
-import { AnyAction, Dispatch } from '@reduxjs/toolkit';
+import { Dispatch } from '@reduxjs/toolkit';
 import {
   getActiveBookInfo,
   getBooksData,
   getSearchResultData,
 } from '#api/bookService/bookService';
-// import { ActiveBookInfoType, ResponseNewBooksDataType } from '#models/BookType';
-// import { BookReducerEnum } from './actionTypes';
-
 import {
   setActiveBookInfo,
   setNewBooksDataToStore,
   setSearchResultToStore,
 } from '.';
+import { AnyAction } from '#store/store';
 
 export const getBooksDataAction =
   () => async (dispatch: Dispatch<AnyAction>) => {

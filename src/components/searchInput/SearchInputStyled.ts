@@ -43,7 +43,8 @@ export const SearchedBooksDropWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: start;
-  gap: 3px;
+  gap: 5px;
+  margin-bottom: 5px;
 `;
 
 export const SearchedBookCard = styled.li`
@@ -51,6 +52,7 @@ export const SearchedBookCard = styled.li`
   display: flex;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
 `;
 
 export const SearchedBookImageWrapper = styled.div<{ $bgColor: string }>`
@@ -73,4 +75,48 @@ export const BookImage = styled.img`
   object-fit: contain;
 `;
 
-export const BookTitle = styled.span``;
+export const BookTitleWrapper = styled.span`
+  width: calc(100% - 90px - 20px - 10px);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  /* flex-wrap: wrap; */
+  align-items: center;
+  gap: 0px;
+`;
+export const BookTitle = styled.p`
+  display: inline;
+  font-weight: 400;
+`;
+
+export const BookTitleBold = styled.p`
+  display: inline;
+  font-weight: 700;
+`;
+
+export const GoToSearchResultButton = styled.button<{
+  $textColor: string;
+  $bgColor: string;
+  $hoverBgColor: string;
+}>`
+  all: unset;
+  width: 100%;
+  cursor: pointer;
+  background-color: ${(props) => props.$bgColor};
+  color: ${(props) => props.$textColor};
+  text-align: center;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 42px;
+  word-wrap: break-word;
+  transition: 0.2s;
+  &:hover {
+    background-color: ${(props) => props.$hoverBgColor};
+  }
+  &:active {
+    background-color: ${(props) => props.$bgColor};
+  }
+`;

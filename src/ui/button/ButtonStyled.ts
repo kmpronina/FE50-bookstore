@@ -1,26 +1,39 @@
 import styled from 'styled-components';
 import { black, gray80, white } from '#styles/colorsConstants';
 
-export const ButtonStyled = styled.button<{ $width: string | undefined }>`
+export const ButtonStyled = styled.button<{
+  $width: string | undefined;
+  $bgColor: string;
+  $color: string;
+  $bgHoverColor: string;
+}>`
   all: unset;
   width: ${(props) => (props.$width ? props.$width : '')};
   cursor: pointer;
   font-family: 'Bebas Neue';
-  background-color: ${black};
-  color: ${white};
+  background-color: ${(props) => props.$bgColor};
+  color: ${(props) => props.$color};
   padding: 16px 40px;
   font-size: 18px;
   font-weight: 700;
   line-height: 24px;
   letter-spacing: 0.9px;
   text-align: center;
+  transition: 0.2s;
 
   &:hover {
-    transition: 0.5s;
-    background-color: ${gray80};
+    background-color: ${(props) => props.$bgHoverColor};
   }
 
   &:active {
-    background-color: ${black};
+    background-color: ${(props) => props.$bgColor};
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: ${(props) => props.$bgHoverColor};
+    &:hover {
+      background-color: ${(props) => props.$bgColor};
+    }
   }
 `;

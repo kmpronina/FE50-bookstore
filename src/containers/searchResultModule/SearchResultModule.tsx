@@ -1,11 +1,11 @@
+import React, { useState } from 'react';
+import { getSearchResultDataAction } from '#store/reducers/bookReducer/actions';
+import { useAppDispatch, useAppSelector } from '#store/store';
+import { BookType } from '#models/bookTypes';
+import { UpdateBooksByDataType } from '#models/UpdateBooksType';
 import PageTitle from '#components/pageTitle';
 import Pagination from '#components/pagination';
 import BookCard from '#containers/bookCard';
-import { BookType } from '#models/BookType';
-import { UpdateBooksByDataType } from '#models/UpdateBooksType';
-import { getSearchResultDataAction } from '#store/reducers/bookReducer/actions';
-import { useAppDispatch, useAppSelector } from '#store/store';
-import React, { useEffect, useState } from 'react';
 import {
   SearchedBooksWrapper,
   SearchResultModuleStyled,
@@ -17,7 +17,7 @@ const SearchResultModule: React.FC = () => {
   );
   const dispatch = useAppDispatch();
   const [activePage, setActivePage] = useState<string>('1');
-  const [currentSearchString, setCurrentSearchString] = useState<string>('');
+  // const [currentSearchString, setCurrentSearchString] = useState<string>('');
   const booksPerPage = 10;
 
   // useEffect(() => {
@@ -25,12 +25,14 @@ const SearchResultModule: React.FC = () => {
   //     dispatch(getSearchResultDataAction(searchString, '1'));
   //     setActivePage('1');
   //     setCurrentSearchString(searchString);
-  //   } else {
+  //   }
+  //   else {
   //     dispatch(getSearchResultDataAction(searchString, activePage));
   //   }
   // }, [searchString]);
 
   const updateBooks = (data: UpdateBooksByDataType) => {
+    if (searchString === null) return;
     const { currentPage } = data;
     setActivePage(String(currentPage));
     dispatch(getSearchResultDataAction(searchString, String(currentPage)));
@@ -39,6 +41,7 @@ const SearchResultModule: React.FC = () => {
   const handlePageSelect = (newPage: number) => {
     updateBooks({ currentPage: newPage });
   };
+
   return (
     <>
       {searcResultData === null ? (
@@ -46,6 +49,7 @@ const SearchResultModule: React.FC = () => {
       ) : (
         <SearchResultModuleStyled>
           <PageTitle>'{searchString}' search results</PageTitle>
+
           {searcResultData.books.length === 0 &&
             `There are no books for the search term '${searchString}'`}
           {searcResultData.books.length > 0 && (

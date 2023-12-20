@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { gray60 } from '#styles/colorsConstants';
 
 export const FooterStyled = styled.footer`
   display: flex;
@@ -8,8 +7,8 @@ export const FooterStyled = styled.footer`
   margin-bottom: 35px;
 `;
 
-export const FooterInfo = styled.span`
-  color: ${gray60};
+export const FooterInfo = styled.span<{ $color: string }>`
+  color: ${(props) => props.$color};
   display: flex;
   flex-direction: row;
   justify-content: space-between;

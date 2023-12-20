@@ -3,13 +3,14 @@ import { Divider } from '@mui/material';
 import useThemeColors from '#hooks/useThemeColors';
 import { useAppDispatch, useAppSelector } from '#store/store';
 import { getBooksDataAction } from '#store/reducers/bookReducer/actions';
-import { BookType } from '#models/BookType';
+import { BookType } from '#models/bookTypes';
 import PageTitle from '#components/pageTitle';
 import { NewBooksModuleStyled, NewBooksWrapper } from './NewBooksModuleStyled';
 import BookCard from '#containers/bookCard';
 import Pagination from '#components/pagination';
 import SubscribeToNewsletter from '#containers/subscribeToNewsletter';
 import { UpdateBooksByDataType } from '#models/UpdateBooksType';
+import InfoMessage from '#ui/infoMessage';
 
 const NewBooksModule: React.FC = () => {
   const { booksData } = useAppSelector((state) => state.bookReducer);
@@ -48,7 +49,9 @@ const NewBooksModule: React.FC = () => {
     <NewBooksModuleStyled>
       <PageTitle>new releases books</PageTitle>
       <NewBooksWrapper>
-        {booksData.error !== '0' && booksData.error}
+        {booksData.error !== '0' && (
+          <InfoMessage>{booksData.error}</InfoMessage>
+        )}
 
         {booksToShow.map((book: BookType) => (
           <BookCard book={book} key={book.isbn13} />
