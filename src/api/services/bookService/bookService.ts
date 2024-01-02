@@ -46,7 +46,7 @@ export const getBooksData = async (): Promise<BookDataType | false> => {
 export const getActiveBookInfo = async (
   isbn: string
 ): Promise<ActiveBookInfoType | false> => {
-  const rawData = await fetch(`${api}${isbn}`);
+  const rawData = await fetch(`${api}books/${isbn}`);
   const data: ActiveBookInfoFromResponseType = await rawData.json();
   if (!data) return false;
 
@@ -83,7 +83,7 @@ export const getSearchResultData = async (
   searchString: string,
   activePage: string
 ): Promise<SearchResultDataType | false> => {
-  const rawData = await fetch(`${api}${searchString}/${activePage}`);
+  const rawData = await fetch(`${api}search/${searchString}/${activePage}`);
   const data: ResponseSearchResultDataType = await rawData.json();
   if (!data) return false;
   const { page, total, books } = data;
