@@ -7,13 +7,14 @@ import {
   SearchResultDataType,
   ResponseSearchResultDataType,
 } from '#models/bookTypes';
+import { api, mockSubtitle } from './constants';
 
 const random = () => {
   return Math.floor(Math.random() * 10);
 };
 
 export const getBooksData = async (): Promise<BookDataType | false> => {
-  const rawData = await fetch('https://api.itbook.store/1.0/new');
+  const rawData = await fetch(`${api}new`);
   const data: ResponseNewBooksDataType = await rawData.json();
   if (!data) return false;
   const { error, total, books } = data;
@@ -23,7 +24,7 @@ export const getBooksData = async (): Promise<BookDataType | false> => {
     total: total,
     books: books.map((book: BookTypeFromResponse) => ({
       title: book.title,
-      subtitle: book.subtitle ? book.subtitle : 'by Lentin Joseph, Apress 2018',
+      subtitle: book.subtitle ? book.subtitle : mockSubtitle,
       isbn13: book.isbn13,
       price: book.price,
       image: book.image,
@@ -45,14 +46,14 @@ export const getBooksData = async (): Promise<BookDataType | false> => {
 export const getActiveBookInfo = async (
   isbn: string
 ): Promise<ActiveBookInfoType | false> => {
-  const rawData = await fetch(`https://api.itbook.store/1.0/books/${isbn}`);
+  const rawData = await fetch(`${api}${isbn}`);
   const data: ActiveBookInfoFromResponseType = await rawData.json();
   if (!data) return false;
 
   const customData: ActiveBookInfoType = {
     error: data.error,
     title: data.title,
-    subtitle: data.subtitle ? data.subtitle : 'by Lentin Joseph, Apress 2018',
+    subtitle: data.subtitle ? data.subtitle : mockSubtitle,
     authors: data.authors,
     publisher: data.publisher,
     isbn10: data.isbn10,
@@ -82,19 +83,16 @@ export const getSearchResultData = async (
   searchString: string,
   activePage: string
 ): Promise<SearchResultDataType | false> => {
-  const rawData = await fetch(
-    `https://api.itbook.store/1.0/search/${searchString}/${activePage}`
-  );
+  const rawData = await fetch(`${api}${searchString}/${activePage}`);
   const data: ResponseSearchResultDataType = await rawData.json();
   if (!data) return false;
-  console.log('data fron service', data);
   const { page, total, books } = data;
   const customData: SearchResultDataType = {
     page: page,
     total: total,
     books: books.map((book: BookTypeFromResponse) => ({
       title: book.title,
-      subtitle: book.subtitle ? book.subtitle : 'by Lentin Joseph, Apress 2018',
+      subtitle: book.subtitle ? book.subtitle : mockSubtitle,
       isbn13: book.isbn13,
       price: book.price,
       image: book.image,

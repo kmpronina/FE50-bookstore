@@ -6,10 +6,7 @@ import {
   gray60,
   gray80,
   red,
-  blue,
-  green,
   orange,
-  purple,
 } from './colorsConstants';
 
 type ThemeColorType = {
@@ -29,8 +26,15 @@ type ThemeColorType = {
   ratingColor: string;
   paginationButtonColor: string;
   paginationButtonActiveColor: string;
+  activeTabButton: string;
   inactiveTabButton: string;
   redColor: string;
+  dividerColor: string;
+  emailInputBgColor: string;
+  emailInputTextColor: string;
+  minusInCartColor: string;
+  reverseButtonBgColor: string;
+  reverseButtonHoverColor: string;
 };
 
 type ThemeVariant = {
@@ -53,30 +57,44 @@ export const colors: ThemeVariant = {
     inputBorderColor: gray40,
     inputTextColor: gray80,
     iconButtonColor: black,
-    ratingColor: gray80,
+    ratingColor: black,
     paginationButtonColor: gray40,
     paginationButtonActiveColor: black,
+    activeTabButton: black,
     inactiveTabButton: gray60,
     redColor: red,
+    dividerColor: gray40,
+    emailInputBgColor: white,
+    emailInputTextColor: gray80,
+    minusInCartColor: gray20,
+    reverseButtonBgColor: white,
+    reverseButtonHoverColor: gray20,
   },
   dark: {
     backgroundColor: black,
     cardBgColor: orange,
-    textColorBlack: white,
-    textColorGray: gray20,
-    titleColor: white,
-    buttonBgColor: gray20,
-    buttonBgHoverColor: white,
+    textColorBlack: gray40,
+    textColorGray: gray60,
+    titleColor: gray40,
+    buttonBgColor: gray40,
+    buttonBgHoverColor: gray20,
     buttonTextColor: black,
     inputBgColor: black,
     inputBgActiveColor: gray80,
     inputBorderColor: gray80,
-    inputTextColor: white,
-    iconButtonColor: white,
-    ratingColor: gray80,
+    inputTextColor: gray20,
+    iconButtonColor: gray20,
+    ratingColor: white,
     paginationButtonColor: gray80,
     paginationButtonActiveColor: white,
-    inactiveTabButton: gray40,
+    activeTabButton: gray40,
+    inactiveTabButton: gray60,
     redColor: red,
+    dividerColor: gray40,
+    emailInputBgColor: gray60,
+    emailInputTextColor: black,
+    minusInCartColor: gray80,
+    reverseButtonBgColor: black,
+    reverseButtonHoverColor: gray80,
   },
 };

@@ -1,6 +1,11 @@
 import React from 'react';
-import { Divider, Rating } from '@mui/material';
+import { Rating } from '@mui/material';
+import useThemeColors from '#hooks/useThemeColors';
+import { useAppDispatch, useAppSelector } from '#store/store';
+import { setBookInCartToStore } from '#store/reducers/bookReducer';
 import { ActiveBookInfoType } from '#models/bookTypes';
+import Button from '#ui/button';
+import Divider from '#ui/divider';
 import {
   PriceCard as PriceCardWrapper,
   Price,
@@ -11,10 +16,6 @@ import {
   DetailValue,
   LinkToChapter,
 } from './BookInfoStyled';
-import useThemeColors from '#hooks/useThemeColors';
-import Button from '#ui/button';
-import { useAppDispatch, useAppSelector } from '#store/store';
-import { setBookInCartToStore } from '#store/reducers/bookReducer';
 
 interface Props {
   book: ActiveBookInfoType;
@@ -30,13 +31,7 @@ const PriceCard: React.FC<Props> = (props) => {
 
   const dispatch = useAppDispatch();
 
-  const {
-    titleColor,
-    ratingColor,
-    textColorBlack,
-    textColorGray,
-    inputBorderColor,
-  } = useThemeColors();
+  const { ratingColor, textColorBlack, textColorGray } = useThemeColors();
 
   const handleAddToCart = () => {
     if (!book) return;
@@ -65,15 +60,9 @@ const PriceCard: React.FC<Props> = (props) => {
 
   return (
     <PriceCardWrapper>
-      <Divider
-        sx={{
-          width: '100%',
-          color: inputBorderColor,
-          marginBottom: '15px',
-        }}
-      />
+      <Divider marginBottom={'15px'} />
       <NumbersLine>
-        <Price $color={titleColor}>{book.price}</Price>
+        <Price $color={textColorBlack}>{book.price}</Price>
         <Rating
           value={Number(book.rating)}
           sx={{ color: ratingColor }}
@@ -89,7 +78,6 @@ const PriceCard: React.FC<Props> = (props) => {
             </DetailRow>
           ))}
       </DetailArea>
-
       <Button
         type="button"
         width="calc(100% - 80px)"
@@ -104,7 +92,7 @@ const PriceCard: React.FC<Props> = (props) => {
       </Button>
       {linkToBook !== null && (
         <LinkToChapter href={linkToBook} $color={textColorBlack}>
-          prewiew book
+          preview book
         </LinkToChapter>
       )}
     </PriceCardWrapper>

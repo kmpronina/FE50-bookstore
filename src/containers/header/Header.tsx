@@ -1,20 +1,23 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Divider, IconButton, Tooltip } from '@mui/material';
+import { IconButton, Tooltip } from '@mui/material';
 import {
   FavoriteBorderOutlined,
   LocalMallOutlined,
   Person2Outlined,
 } from '@mui/icons-material';
-import { useAppSelector } from '#store/store';
 import useThemeColors from '#hooks/useThemeColors';
+import { useAppSelector } from '#store/store';
 import { RouterLocationsEnum } from '#router/Router';
 import SearchInput from '#components/searchInput';
+import SmallScreenMenu from './SmallScreenMenu';
+import Divider from '#ui/divider';
 import {
   HeaderWrapper,
   HeaderStyled,
   HeaderTitle,
   InteractionArea,
+  InputWrapperForBigScreen,
 } from './HeaderStyled';
 
 const Header: React.FC = () => {
@@ -22,17 +25,22 @@ const Header: React.FC = () => {
 
   const navigation = useNavigate();
 
-  const { iconButtonColor, inputBorderColor } = useThemeColors();
+  const { iconButtonColor, textColorBlack } = useThemeColors();
 
   return (
     <HeaderWrapper>
       <HeaderStyled>
         <Tooltip title="Go to main page">
-          <HeaderTitle onClick={() => navigation(RouterLocationsEnum.main)}>
+          <HeaderTitle
+            onClick={() => navigation(RouterLocationsEnum.main)}
+            $color={textColorBlack}
+          >
             bookstore
           </HeaderTitle>
-        </Tooltip>{' '}
-        <SearchInput />
+        </Tooltip>
+        <InputWrapperForBigScreen>
+          <SearchInput />
+        </InputWrapperForBigScreen>
         <InteractionArea>
           <Tooltip
             title={
@@ -81,10 +89,9 @@ const Header: React.FC = () => {
             </IconButton>
           </Tooltip>
         </InteractionArea>
+        <SmallScreenMenu />
       </HeaderStyled>
-      <Divider
-        sx={{ width: '100%', color: inputBorderColor, marginBottom: '20px' }}
-      />
+      <Divider marginBottom={'20px'} />
     </HeaderWrapper>
   );
 };

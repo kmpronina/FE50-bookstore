@@ -1,14 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Divider, IconButton, Tooltip } from '@mui/material';
+import { IconButton, Tooltip } from '@mui/material';
 import { Add, CloseOutlined, Remove } from '@mui/icons-material';
+import useThemeColors from '#hooks/useThemeColors';
 import { useAppDispatch, useAppSelector } from '#store/store';
 import {
   setActiveBookByISBN,
   setBookInCartToStore,
 } from '#store/reducers/bookReducer';
-import useThemeColors from '#hooks/useThemeColors';
 import { ActiveBookInfoType } from '#models/bookTypes';
+import Divider from '#ui/divider';
 import {
   BookInCartCardStyled,
   BookInCartCardWrapper,
@@ -20,20 +21,23 @@ import {
   BookDescription,
   NumbersWrapper,
   Price,
+  DeleteButtonWrapper,
 } from './BookInCartCardStyled';
 
 interface Props {
   book: ActiveBookInfoType;
 }
+
 const BookInCartCard: React.FC<Props> = (props) => {
   const { book } = props;
 
   const { booksInCart } = useAppSelector((state) => state.bookReducer);
 
   const dispatch = useAppDispatch();
+
   const navigation = useNavigate();
 
-  const { textColorBlack, textColorGray } = useThemeColors();
+  const { textColorBlack, textColorGray, minusInCartColor } = useThemeColors();
 
   const handleGoToBookPage = () => {
     dispatch(setActiveBookByISBN(book.isbn13));
@@ -45,7 +49,7 @@ const BookInCartCard: React.FC<Props> = (props) => {
     dispatch(
       setBookInCartToStore(
         booksInCartClone.filter(
-          (bookIncart: ActiveBookInfoType) => bookIncart.isbn13 !== book.isbn13
+          (bookInCart: ActiveBookInfoType) => bookInCart.isbn13 !== book.isbn13
         )
       )
     );
@@ -99,7 +103,10 @@ const BookInCartCard: React.FC<Props> = (props) => {
               <IconButton
                 disabled={book.numberOfItemsInCart <= 1}
                 onClick={handleRemoveBook}
-                sx={{ color: textColorBlack }}
+                sx={{
+                  color: textColorBlack,
+                  '&:disabled': { color: minusInCartColor },
+                }}
               >
                 <Remove />
               </IconButton>
@@ -120,13 +127,15 @@ const BookInCartCard: React.FC<Props> = (props) => {
             book.numberOfItemsInCart
           ).toFixed(2)}
         </Price>
-        <Tooltip title="Remove from cart">
-          <IconButton onClick={removeInCartStatus}>
-            <CloseOutlined />
-          </IconButton>
-        </Tooltip>
+        <DeleteButtonWrapper>
+          <Tooltip title="Remove from cart">
+            <IconButton onClick={removeInCartStatus} sx={{ padding: '10px' }}>
+              <CloseOutlined />
+            </IconButton>
+          </Tooltip>
+        </DeleteButtonWrapper>
       </BookInCartCardStyled>
-      <Divider sx={{ width: '100%', color: textColorGray }} />
+      <Divider />
     </BookInCartCardWrapper>
   );
 };

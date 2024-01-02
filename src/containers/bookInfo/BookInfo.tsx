@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { Tooltip } from '@mui/material';
 import { FavoriteBorder, HeartBrokenOutlined } from '@mui/icons-material';
+import useThemeColors from '#hooks/useThemeColors';
 import { useAppDispatch, useAppSelector } from '#store/store';
 import { setFavoriteBookToStore } from '#store/reducers/bookReducer';
-import useThemeColors from '#hooks/useThemeColors';
 import { ActiveBookInfoType } from '#models/bookTypes';
 import PageTitle from '#components/pageTitle';
+import InfoMessage from '#ui/infoMessage';
+import InfoTabs from './InfoTabs';
+import PriceCard from './PriceCard';
 import {
   BookInfoWrapper,
   BookInfoStyled,
@@ -12,11 +16,8 @@ import {
   ImgWrapper,
   BookImg,
   LikeButton,
+  LikeButtonWrapper,
 } from './BookInfoStyled';
-import InfoTabs from './InfoTabs';
-import PriceCard from './PriceCard';
-import { Tooltip } from '@mui/material';
-import InfoMessage from '#ui/infoMessage';
 
 const BookInfo: React.FC = () => {
   const { activeBookInfo, favoriteBooks, booksInCart } = useAppSelector(
@@ -100,21 +101,23 @@ const BookInfo: React.FC = () => {
                   activeUser ? 'Add to favorites' : 'Sing in to use favorites'
                 }
               >
-                <LikeButton
-                  $color={buttonBgColor}
-                  $hoverColor={buttonBgHoverColor}
-                  $iconColor={backgroundColor}
-                  $isLiked={isLikedStatusFromStore}
-                  $red={redColor}
-                  onClick={toggleLikeStatus}
-                  disabled={!activeUser}
-                >
-                  {isLikedStatusFromStore ? (
-                    <HeartBrokenOutlined />
-                  ) : (
-                    <FavoriteBorder />
-                  )}
-                </LikeButton>
+                <LikeButtonWrapper>
+                  <LikeButton
+                    $color={buttonBgColor}
+                    $hoverColor={buttonBgHoverColor}
+                    $iconColor={backgroundColor}
+                    $isLiked={isLikedStatusFromStore}
+                    $red={redColor}
+                    onClick={toggleLikeStatus}
+                    disabled={!activeUser}
+                  >
+                    {isLikedStatusFromStore ? (
+                      <HeartBrokenOutlined />
+                    ) : (
+                      <FavoriteBorder />
+                    )}
+                  </LikeButton>
+                </LikeButtonWrapper>
               </Tooltip>
               <BookImg src={activeBookInfo.image} />
             </ImgWrapper>

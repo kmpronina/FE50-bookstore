@@ -1,6 +1,5 @@
+import React, { PropsWithChildren } from 'react';
 import useThemeColors from '#hooks/useThemeColors';
-import React from 'react';
-import { PropsWithChildren } from 'react';
 import { PageTitleStyled, PageTitleWrapper } from './PageTitleStyled';
 
 interface Props extends PropsWithChildren {}
@@ -11,7 +10,7 @@ const PageTitle: React.FC<Props> = (props) => {
 
   return (
     <PageTitleWrapper>
-      <PageTitleStyled $textcolor={textColorBlack}>{children}</PageTitleStyled>
+      <PageTitleStyled $textColor={textColorBlack}>{children}</PageTitleStyled>
     </PageTitleWrapper>
   );
 };

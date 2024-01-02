@@ -1,8 +1,9 @@
 import React, { PropsWithChildren } from 'react';
+import useThemeColors from '#hooks/useThemeColors';
 import Header from '#containers/header';
 import Footer from '#containers/footer';
 import {
-  CildrenWrapper,
+  ChildrenWrapper,
   ContentWithHeaderStyled,
 } from './ContentWithHeaderStyled';
 
@@ -10,10 +11,13 @@ interface Props extends PropsWithChildren {}
 
 const ContentWithHeader: React.FC<Props> = (props) => {
   const { children } = props;
+
+  const { textColorBlack, backgroundColor } = useThemeColors();
+
   return (
-    <ContentWithHeaderStyled>
+    <ContentWithHeaderStyled $color={textColorBlack} $bgColor={backgroundColor}>
       <Header />
-      <CildrenWrapper>{children}</CildrenWrapper>
+      <ChildrenWrapper>{children}</ChildrenWrapper>
       <Footer />
     </ContentWithHeaderStyled>
   );

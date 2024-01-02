@@ -1,5 +1,10 @@
 import React from 'react';
 import { useFormik } from 'formik';
+import useThemeColors from '#hooks/useThemeColors';
+import { useAppDispatch, useAppSelector } from '#store/store';
+import { setSubscribeEmailToStore } from '#store/reducers/userReducer';
+import { emailValidationSchema } from './emailValidationSchema';
+import Button from '#ui/button';
 import {
   EmailArea,
   EmailInput,
@@ -7,13 +12,12 @@ import {
   SubscribeTitle,
   SubscribeToNewsletterStyled,
 } from './SubscribeToNewsletterStyled';
-import Button from '#ui/button';
-import { emailValidationSchema } from './emailValidationSchema';
-import { useAppDispatch, useAppSelector } from '#store/store';
-import { setSubscribeEmailToStore } from '#store/reducers/userReducer';
 
 const SubscribeToNewsletter: React.FC = () => {
   const { subscribeEmail } = useAppSelector((state) => state.userReducer);
+
+  const { emailInputBgColor, emailInputTextColor } = useThemeColors();
+
   const dispatch = useAppDispatch();
 
   type SubscribeFormikType = {
@@ -48,23 +52,27 @@ const SubscribeToNewsletter: React.FC = () => {
       </SubscribeTitle>
       <SubscribeSubtitle>
         {subscribeEmail
-          ? 'To subscribe to the newletter by another email enter the detail below.'
+          ? 'To subscribe to the newsletter by another email enter the detail below.'
           : 'Be the first to know about new IT books, upcoming releases, exclusive offers and more.'}
       </SubscribeSubtitle>
-      <EmailArea>
-        <form onSubmit={formik.handleSubmit} style={{ width: '100%' }}>
+
+      <form onSubmit={formik.handleSubmit} style={{ width: '100%' }}>
+        <EmailArea>
+          {' '}
           <EmailInput
             name="email"
             type={'email'}
             value={formik.values.email}
             placeholder={'Your email'}
             onChange={formik.handleChange}
+            $bgColor={emailInputBgColor}
+            $color={emailInputTextColor}
           />
           <Button type="submit" onClick={handleSubscribeClick}>
             subscribe
           </Button>
-        </form>
-      </EmailArea>
+        </EmailArea>{' '}
+      </form>
     </SubscribeToNewsletterStyled>
   );
 };

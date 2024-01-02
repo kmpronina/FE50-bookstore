@@ -1,14 +1,15 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { HeartBrokenOutlined } from '@mui/icons-material';
+import { Rating, Tooltip } from '@mui/material';
 import useThemeColors from '#hooks/useThemeColors';
-import { ActiveBookInfoType } from '#models/bookTypes';
 import {
   setActiveBookByISBN,
   setFavoriteBookToStore,
 } from '#store/reducers/bookReducer';
 import { useAppDispatch, useAppSelector } from '#store/store';
-import { HeartBrokenOutlined } from '@mui/icons-material';
-import { Divider, Rating, Tooltip } from '@mui/material';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { ActiveBookInfoType } from '#models/bookTypes';
+import Divider from '#ui/divider';
 import {
   BookDescription,
   BookImg,
@@ -21,6 +22,7 @@ import {
   FavoriteBookCardStyled,
   FavoriteBookCardWrapper,
   TextInfoWrapper,
+  LikeButtonWrapper,
 } from './FavoriteBookCardStyled';
 
 interface Props {
@@ -33,6 +35,7 @@ const FavoriteBookCard: React.FC<Props> = (props) => {
   const { favoriteBooks } = useAppSelector((state) => state.bookReducer);
 
   const dispatch = useAppDispatch();
+
   const navigation = useNavigate();
 
   const {
@@ -82,18 +85,20 @@ const FavoriteBookCard: React.FC<Props> = (props) => {
               />
             </BookNumbers>
           </TextInfoWrapper>
+          <LikeButtonWrapper>
+            <Tooltip title="Remove from favorites">
+              <LikeButton
+                $hoverColor={buttonBgHoverColor}
+                $red={redColor}
+                onClick={removeLikeStatus}
+              >
+                <HeartBrokenOutlined />
+              </LikeButton>
+            </Tooltip>
+          </LikeButtonWrapper>
         </InfoWrapper>
-        <Tooltip title="Remove from favorites">
-          <LikeButton
-            $hoverColor={buttonBgHoverColor}
-            $red={redColor}
-            onClick={removeLikeStatus}
-          >
-            <HeartBrokenOutlined />
-          </LikeButton>
-        </Tooltip>
       </FavoriteBookCardStyled>
-      <Divider sx={{ width: '100%', color: textColorGray }} />
+      <Divider marginBottom={'0px'} />
     </FavoriteBookCardWrapper>
   );
 };

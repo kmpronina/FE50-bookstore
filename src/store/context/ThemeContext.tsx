@@ -11,7 +11,11 @@ type ThemeContextType = {
 };
 
 export const ThemeContext = React.createContext<ThemeContextType>({
-  theme: ThemeEnum.light,
+  theme:
+    window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? ThemeEnum.dark
+      : ThemeEnum.light,
   setTheme: () => {},
 });
 
@@ -19,6 +23,7 @@ export const ThemeContextProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const [theme, setTheme] = useState<ThemeEnum>(ThemeEnum.light);
+
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
