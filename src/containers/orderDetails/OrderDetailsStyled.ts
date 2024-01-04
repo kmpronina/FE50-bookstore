@@ -7,6 +7,18 @@ export const OrderDetailsStyled = styled.div`
   flex-direction: column;
   gap: 25px;
   margin-bottom: 50px;
+
+  @media screen and (max-width: 767px) {
+    width: 30%;
+  }
+
+  @media screen and (max-width: 600px) {
+    width: 40%;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 50%;
+  }
 `;
 
 export const PreparatoryDetails = styled.div`
@@ -29,6 +41,11 @@ export const OrderDetailName = styled.span<{ $color: string }>`
   line-height: 24px;
   word-wrap: break-word;
   text-transform: capitalize;
+
+  @media screen and (max-width: 992px) {
+    font-size: 14px;
+    line-height: 20px;
+  }
 `;
 
 export const OrderDetailValue = styled.span<{ $color: string }>`
@@ -37,6 +54,11 @@ export const OrderDetailValue = styled.span<{ $color: string }>`
   font-weight: 400;
   line-height: 24px;
   word-wrap: break-word;
+
+  @media screen and (max-width: 992px) {
+    font-size: 14px;
+    line-height: 20px;
+  }
 `;
 
 export const TotalDetail = styled.span<{ $color: string }>`
@@ -47,4 +69,9 @@ export const TotalDetail = styled.span<{ $color: string }>`
   line-height: 60px;
   word-wrap: break-word;
   text-transform: uppercase;
+
+  @media screen and (max-width: 992px) {
+    font-size: 32px;
+    line-height: 48px;
+  }
 `;

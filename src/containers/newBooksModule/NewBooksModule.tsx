@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { Divider } from '@mui/material';
-import useThemeColors from '#hooks/useThemeColors';
 import { useAppDispatch, useAppSelector } from '#store/store';
 import { getBooksDataAction } from '#store/reducers/bookReducer/actions';
 import { BookType } from '#models/bookTypes';
-import PageTitle from '#components/pageTitle';
-import { NewBooksModuleStyled, NewBooksWrapper } from './NewBooksModuleStyled';
+import { UpdateBooksByDataType } from '#models/UpdateBooksType';
 import BookCard from '#containers/bookCard';
+import PageTitle from '#components/pageTitle';
 import Pagination from '#components/pagination';
 import SubscribeToNewsletter from '#containers/subscribeToNewsletter';
-import { UpdateBooksByDataType } from '#models/UpdateBooksType';
+import Divider from '#ui/divider';
 import InfoMessage from '#ui/infoMessage';
+import { NewBooksModuleStyled, NewBooksWrapper } from './NewBooksModuleStyled';
 
 const NewBooksModule: React.FC = () => {
   const { booksData } = useAppSelector((state) => state.bookReducer);
+
   const dispatch = useAppDispatch();
 
   const [activePage, setActivePage] = useState<number>(1);
   const [booksToShow, setBooksToShow] = useState<BookType[]>([]);
-
-  const { inputBorderColor } = useThemeColors();
 
   useEffect(() => {
     booksData.books.length === 0 && dispatch(getBooksDataAction());
@@ -52,14 +50,11 @@ const NewBooksModule: React.FC = () => {
         {booksData.error !== '0' && (
           <InfoMessage>{booksData.error}</InfoMessage>
         )}
-
         {booksToShow.map((book: BookType) => (
           <BookCard book={book} key={book.isbn13} />
         ))}
       </NewBooksWrapper>
-      <Divider
-        sx={{ width: '100%', color: inputBorderColor, marginBottom: '30px' }}
-      />
+      <Divider />
       <Pagination
         onPageChange={handlePageSelect}
         activePage={activePage}

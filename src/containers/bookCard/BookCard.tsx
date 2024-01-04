@@ -3,7 +3,7 @@ import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { Rating } from '@mui/material';
 import useThemeColors from '#hooks/useThemeColors';
 import { useAppDispatch } from '#store/store';
-
+import { setActiveBookByISBN } from '#store/reducers/bookReducer';
 import { BookType } from '#models/bookTypes';
 import {
   BookCardStyled,
@@ -15,15 +15,18 @@ import {
   ImgWrapper,
   InfoArea,
 } from './BookCardStyled';
-import { setActiveBookByISBN } from '#store/reducers/bookReducer';
 
 interface Props {
   book: BookType;
 }
+
 const BookCard: React.FC<Props> = (props) => {
   const { book } = props;
-  const { ratingColor } = useThemeColors();
+
+  const { ratingColor, textColorBlack, textColorGray } = useThemeColors();
+
   const navigation: NavigateFunction = useNavigate();
+
   const dispatch = useAppDispatch();
 
   const handleGoToBookPage = () => {
@@ -37,11 +40,11 @@ const BookCard: React.FC<Props> = (props) => {
         <ImgWrapper $color={book.color}>
           <BookImg src={book.image} />
         </ImgWrapper>
-        <BookTitle>{book.title}</BookTitle>
-        <BookSubtitle>{book.subtitle}</BookSubtitle>
+        <BookTitle $color={textColorBlack}>{book.title}</BookTitle>
+        <BookSubtitle $color={textColorGray}>{book.subtitle}</BookSubtitle>
       </ClickableArea>
       <InfoArea>
-        <BookPrice>{book.price}</BookPrice>
+        <BookPrice $color={textColorBlack}>{book.price}</BookPrice>
         <Rating value={book.rating} sx={{ color: ratingColor }} readOnly />
       </InfoArea>
     </BookCardStyled>

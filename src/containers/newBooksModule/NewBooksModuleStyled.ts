@@ -10,4 +10,9 @@ export const NewBooksWrapper = styled.div`
   align-items: center;
   gap: 10px;
   margin-bottom: 50px;
+
+  @media screen and (max-width: 833px) {
+    justify-content: center;
+    margin: auto;
+  }
 `;

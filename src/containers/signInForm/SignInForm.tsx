@@ -7,23 +7,24 @@ import { SignInDataType } from '#models/authorizationTypes';
 import { RouterLocationsEnum } from '#router/Router';
 import { signInValidationSchema } from './signInValidationSchema';
 import Button from '#ui/button';
+import InputLabel from '#ui/inputLabel';
 import {
   Input,
   InputArea,
-  Label,
   SignFormStyled,
+  ErrorMessage,
 } from '#containers/signUpForm/SignUpFormStyled';
-import InputErrorMessage from '#ui/inputErrorMessage';
 
 const SignInForm: React.FC = () => {
-  const { textColorBlack, inputTextColor, inputBorderColor } = useThemeColors();
+  const { inputTextColor, inputBorderColor } = useThemeColors();
 
   const [singInError, setSingInError] = useState<string | undefined>(undefined);
 
   const { signIn } = useAuth();
+
   const navigation = useNavigate();
 
-  const intialFormikValues: SignInDataType = {
+  const initialFormikValues: SignInDataType = {
     email: '',
     password: '',
   };
@@ -35,6 +36,9 @@ const SignInForm: React.FC = () => {
     });
     if (error) {
       setSingInError(error);
+      setTimeout(() => {
+        setSingInError(undefined);
+      }, 7000);
       return;
     }
     if (isSuccess) {
@@ -44,17 +48,35 @@ const SignInForm: React.FC = () => {
 
   const formik = useFormik({
     validateOnMount: true,
-    initialValues: intialFormikValues,
+    initialValues: initialFormikValues,
     validationSchema: signInValidationSchema,
     onSubmit: handleSubmit,
   });
 
+  const handleDone = () => {
+    if (formik.errors.password) {
+      setSingInError(formik.errors.password);
+      setTimeout(() => {
+        setSingInError(undefined);
+      }, 3000);
+      return;
+    }
+
+    if (formik.errors.email) {
+      setSingInError(formik.errors.email);
+      setTimeout(() => {
+        setSingInError(undefined);
+      }, 3000);
+      return;
+    }
+
+    formik.submitForm();
+  };
+
   return (
     <SignFormStyled>
       <InputArea>
-        <Label htmlFor="email" $color={textColorBlack}>
-          email
-        </Label>
+        <InputLabel labelFor="email">email</InputLabel>
         <Input
           type="text"
           id="email"
@@ -64,12 +86,7 @@ const SignInForm: React.FC = () => {
           $color={inputTextColor}
           $borderColor={inputBorderColor}
         />
-        {formik.touched.email && formik.errors.email ? (
-          <InputErrorMessage>{formik.errors.email}</InputErrorMessage>
-        ) : null}
-        <Label htmlFor="password" $color={textColorBlack}>
-          password
-        </Label>
+        <InputLabel labelFor="password">password</InputLabel>
         <Input
           type="password"
           id="password"
@@ -79,16 +96,9 @@ const SignInForm: React.FC = () => {
           $color={inputTextColor}
           $borderColor={inputBorderColor}
         />
-        {formik.touched.password && formik.errors.password ? (
-          <InputErrorMessage>{formik.errors.password}</InputErrorMessage>
-        ) : null}
       </InputArea>
-      {singInError && <InputErrorMessage>{singInError}</InputErrorMessage>}
-      <Button
-        type="submit"
-        onClick={() => formik.submitForm()}
-        disabled={!formik.isValid}
-      >
+      {singInError && <ErrorMessage>{singInError}</ErrorMessage>}
+      <Button type={'submit'} onClick={handleDone}>
         sign in
       </Button>
     </SignFormStyled>

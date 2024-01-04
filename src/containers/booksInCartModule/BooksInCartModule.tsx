@@ -1,21 +1,23 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '#store/store';
-import { BooksInCartModuleStyled } from './BooksInCartModuleStyled';
-import { ActiveBookInfoType } from '#models/bookTypes';
-import GoBackButton from '#ui/goBackButton';
-import PageTitle from '#components/pageTitle';
-import InfoMessage from '#ui/infoMessage';
-import BookInCartCard from '#containers/bookInCartCard';
 import { setBookInCartToStore } from '#store/reducers/bookReducer';
+import { ActiveBookInfoType } from '#models/bookTypes';
+import PageTitle from '#components/pageTitle';
+import BookInCartCard from '#containers/bookInCartCard';
 import OrderDetails from '#containers/orderDetails';
+import GoBackButton from '#ui/goBackButton';
+import InfoMessage from '#ui/infoMessage';
+import { BooksInCartModuleStyled } from './BooksInCartModuleStyled';
 
 const BooksInCartModule: React.FC = () => {
   const { booksInCart } = useAppSelector((state) => state.bookReducer);
+
   const dispatch = useAppDispatch();
-  const booksInCartClone: ActiveBookInfoType[] = structuredClone(booksInCart);
 
   useEffect(() => {
     if (!booksInCart) return;
+
+    const booksInCartClone: ActiveBookInfoType[] = structuredClone(booksInCart);
     booksInCartClone.map((item: ActiveBookInfoType) =>
       item.numberOfItemsInCart === 0
         ? (item.numberOfItemsInCart = 1)

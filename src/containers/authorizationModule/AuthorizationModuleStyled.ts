@@ -12,6 +12,10 @@ export const AuthorizationModuleStyled = styled.div<{ $borderColor: string }>`
   display: flex;
   flex-direction: column;
   border: 1px solid ${(props) => props.$borderColor};
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 `;
 
 export const TabsWrapper = styled.div`
@@ -39,6 +43,7 @@ export const TabButton = styled.button<{
   text-transform: capitalize;
   transition: 0.2s;
   border-bottom: ${(props) => (props.$isActive ? '1px solid black' : 'none')};
+
   &:hover {
     color: ${(props) => props.$colorActive};
   }

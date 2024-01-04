@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Divider, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import { FacebookOutlined, MoreHoriz, Twitter } from '@mui/icons-material';
 import useThemeColors from '#hooks/useThemeColors';
 import { ActiveBookInfoType } from '#models/bookTypes';
+import Divider from '#ui/divider';
 import {
   DescriptionWrapper,
   Description,
@@ -19,7 +20,7 @@ interface Props {
 const InfoTabs: React.FC<Props> = (props) => {
   const { book } = props;
 
-  const { textColorBlack, inputBorderColor, inactiveTabButton } =
+  const { textColorBlack, activeTabButton, inactiveTabButton } =
     useThemeColors();
 
   const [activeTabId, setActiveTabId] = useState<string>('1');
@@ -40,20 +41,14 @@ const InfoTabs: React.FC<Props> = (props) => {
               id={item.id}
               onClick={() => setActiveTabId(item.id)}
               $isActive={activeTabId === item.id}
-              $colorActive={textColorBlack}
+              $colorActive={activeTabButton}
               $colorInactive={inactiveTabButton}
             >
               {item.name}
             </TabButton>
           ))}
         </TabsWrapper>
-        <Divider
-          sx={{
-            width: '100%',
-            color: inputBorderColor,
-            marginBottom: '30px',
-          }}
-        />
+        <Divider />
         <Description $color={textColorBlack}>
           {activeTabId === tabsItems[0].id && <>{book.desc}</>}
           {activeTabId === tabsItems[1].id && <>{book.authors}</>}
@@ -64,7 +59,10 @@ const InfoTabs: React.FC<Props> = (props) => {
               provides an introduction to programming and problem solving using
               both Matlab and Mathcad. We provide a balanced selection of
               introductory exercises and real-world problems (i.e. no
-              "contrived" problems).
+              "contrived" problems). This free book, or really a "coursebook"
+              for a college freshman-level class, has been updated for Spring
+              2014 and provides an introduction to programming and problem
+              solving using both Matlab and Mathcad.
             </>
           )}
         </Description>

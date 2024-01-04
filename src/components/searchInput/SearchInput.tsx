@@ -1,7 +1,7 @@
 import React, { BaseSyntheticEvent, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { IconButton, InputBase } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import { Clear, Search } from '@mui/icons-material';
 import useThemeColors from '#hooks/useThemeColors';
 import { useDebounce } from '#hooks/useDebounce';
 import { useAppDispatch, useAppSelector } from '#store/store';
@@ -22,11 +22,12 @@ import {
 import DropdownCard from './DropdownCard';
 
 const SearchInput: React.FC = () => {
-  const { searcResultData, searchString } = useAppSelector(
+  const { searchResultData, searchString } = useAppSelector(
     (state) => state.bookReducer
   );
 
   const dispatch = useAppDispatch();
+
   const navigation = useNavigate();
 
   const { inputBgActiveColor, inputBorderColor, inputBgColor, inputTextColor } =
@@ -49,18 +50,26 @@ const SearchInput: React.FC = () => {
   }, [searchString]);
 
   useEffect(() => {
-    searcResultData && setSearchedBooks(searcResultData.books);
-  }, [searcResultData]);
+    searchResultData && setSearchedBooks(searchResultData.books);
+  }, [searchResultData]);
 
   const handleInputChange = (e: BaseSyntheticEvent) => {
-    if (!e.target.value) return;
     setSearchValue(e.target.value);
+    if (e.target.value === '') {
+      setIsDropdownActive(false);
+      return;
+    }
     setIsDropdownActive(true);
   };
 
   const handleSearchSubmit = () => {
     setIsDropdownActive(false);
     navigation(RouterLocationsEnum.search);
+  };
+
+  const handleClearSearch = () => {
+    setSearchValue('');
+    setIsDropdownActive(false);
   };
 
   return (
@@ -74,18 +83,26 @@ const SearchInput: React.FC = () => {
       >
         <InputBase
           value={searchValue}
-          sx={{ ml: 1, flex: 1 }}
+          sx={{ ml: 1, flex: 1, color: inputTextColor }}
           placeholder="Search"
           onChange={handleInputChange}
         />
         <IconButton
           type="button"
-          sx={{ p: '10px' }}
+          sx={{ p: '10px', color: inputTextColor }}
+          disabled={!(searchValue.length > 0)}
+          onClick={handleClearSearch}
+        >
+          <Clear />
+        </IconButton>
+        <IconButton
+          type="button"
+          sx={{ p: '10px', color: inputTextColor }}
           aria-label="search"
           disabled={!(searchValue.length > 0)}
           onClick={handleSearchSubmit}
         >
-          <SearchIcon />
+          <Search />
         </IconButton>
       </SearchInputStyled>
       {isDropdownActive && (
@@ -103,7 +120,7 @@ const SearchInput: React.FC = () => {
                     dispatch(setActiveBookByISBN(book.isbn13)),
                     setSearchValue(''),
                   ]}
-                  style={{ all: 'unset' }}
+                  style={{ all: 'unset', width: '100%' }}
                   key={book.isbn13}
                 >
                   {searchString && (
@@ -116,7 +133,7 @@ const SearchInput: React.FC = () => {
                 </Link>
               ))}
             </SearchedBooksDropWrapper>
-          )}{' '}
+          )}
           <GoToSearchResultButton
             $textColor={inputTextColor}
             $bgColor={inputBgColor}

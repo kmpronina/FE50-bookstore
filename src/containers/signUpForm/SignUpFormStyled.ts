@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { red } from '#styles/colorsConstants';
 
 export const SignFormStyled = styled.div`
   display: flex;
@@ -25,10 +26,9 @@ export const Input = styled.input<{ $borderColor: string; $color: string }>`
   cursor: text;
 `;
 
-export const Label = styled.label<{ $color: string }>`
-color: ${(props) => props.$color}
-font-size: 16px;
-font-weight: 700;
-line-height: 32px;
-text-transform: capitalize;
+export const ErrorMessage = styled.span`
+  padding: 0;
+  margin: 0;
+  color: ${red};
+  font-size: 12px;
 `;

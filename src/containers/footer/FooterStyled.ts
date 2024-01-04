@@ -5,6 +5,11 @@ export const FooterStyled = styled.footer`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 35px;
+
+  @media screen and (max-width: 450px) {
+    flex-direction: column;
+    gap: 15px;
+  }
 `;
 
 export const FooterInfo = styled.span<{ $color: string }>`

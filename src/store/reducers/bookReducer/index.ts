@@ -10,7 +10,7 @@ type BookReducerType = {
   searchString: string | null;
   activeBookISBN: string | null;
   activeBookInfo: ActiveBookInfoType | null;
-  searcResultData: SearchResultDataType | null;
+  searchResultData: SearchResultDataType | null;
   favoriteBooks: ActiveBookInfoType[];
   booksInCart: ActiveBookInfoType[];
 };
@@ -22,7 +22,7 @@ const bookReducer = createSlice({
     searchString: null,
     activeBookISBN: null,
     activeBookInfo: null,
-    searcResultData: null,
+    searchResultData: null,
     favoriteBooks: [],
     booksInCart: [],
   } as BookReducerType,
@@ -41,7 +41,7 @@ const bookReducer = createSlice({
       state.searchString = action.payload;
     },
     setSearchResultToStore: (state, action) => {
-      state.searcResultData = action.payload;
+      state.searchResultData = action.payload;
     },
     setFavoriteBookToStore: (state, action) => {
       state.favoriteBooks = action.payload;

@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import { useAppSelector } from '#store/store';
 import { RouterLocationsEnum } from './Router';
 import MainPage from '#pages/MainPage';
 import SearchResultPage from '#pages/SearchResultPage';
@@ -6,9 +7,8 @@ import FavoriteBooksPage from '#pages/FavoriteBooksPage';
 import BookPage from '#pages/BookPage';
 import CartPage from '#pages/CartPage';
 import AuthorizationPage from '#pages/AuthorizationPage';
-import ProtectedRoute, { ProtectedRouteProps } from './ProtectedRoute';
-import { useAppSelector } from '#store/store';
 import AccountPage from '#pages/AccountPage';
+import ProtectedRoute, { ProtectedRouteProps } from './ProtectedRoute';
 
 const RouterRoutes = () => {
   const { activeUser } = useAppSelector((state) => state.userReducer);
@@ -17,6 +17,7 @@ const RouterRoutes = () => {
     isAuthenticated: !!activeUser,
     authenticationPath: RouterLocationsEnum.authorization,
   };
+
   return (
     <Routes>
       <Route path="">
@@ -57,11 +58,6 @@ const RouterRoutes = () => {
           path={RouterLocationsEnum.authorization}
           Component={() => <AuthorizationPage />}
         />
-        {/* <Route path={RouterLocationsEnum.signUp} Component={SignUpPage} /> */}
-        {/* {accessToken && ( */}
-        {/* <Route path={RouterLocationsEnum.blogPage} Component={BlogPage} /> */}
-        {/* )}  */}
-        {/* <Route path="*" Component={NotFound404Page} /> */}
       </Route>
     </Routes>
   );

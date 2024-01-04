@@ -4,7 +4,7 @@ export const PageTitleWrapper = styled.div`
   margin-bottom: 30px;
 `;
 
-export const PageTitleStyled = styled.h2<{ $textcolor?: string }>`
+export const PageTitleStyled = styled.h2<{ $textColor?: string }>`
   all: unset;
   padding-right: 200px;
   font-family: 'Bebas Neue';
@@ -14,5 +14,5 @@ export const PageTitleStyled = styled.h2<{ $textcolor?: string }>`
   transition: 0.2s;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: ${(props) => props.$textcolor};
+  color: ${(props) => props.$textColor};
 `;

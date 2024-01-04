@@ -1,7 +1,7 @@
+import React from 'react';
 import useThemeColors from '#hooks/useThemeColors';
 import { useAppSelector } from '#store/store';
 import Button from '#ui/button';
-import React from 'react';
 import {
   OrderDetailName,
   OrderDetailRow,
@@ -13,6 +13,7 @@ import {
 
 const OrderDetails: React.FC = () => {
   const { booksInCart } = useAppSelector((state) => state.bookReducer);
+
   const { textColorBlack, textColorGray } = useThemeColors();
 
   let total: number = booksInCart.reduce(

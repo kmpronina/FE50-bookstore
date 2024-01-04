@@ -5,13 +5,18 @@ import useThemeColors from '#hooks/useThemeColors';
 import { setIsSignUpActive } from '#store/reducers/userReducer';
 import { useAppDispatch } from '#store/store';
 import { SingUpDataType } from '#models/authorizationTypes';
-import Button from '#ui/button';
-import InputErrorMessage from '#ui/inputErrorMessage';
 import { signUpValidationSchema } from './signUpValidationSchema';
-import { Input, InputArea, Label, SignFormStyled } from './SignUpFormStyled';
+import Button from '#ui/button';
+import InputLabel from '#ui/inputLabel';
+import {
+  ErrorMessage,
+  Input,
+  InputArea,
+  SignFormStyled,
+} from './SignUpFormStyled';
 
 const SignUpForm: React.FC = () => {
-  const { inputBorderColor, inputTextColor, textColorBlack } = useThemeColors();
+  const { inputBorderColor, inputTextColor } = useThemeColors();
 
   const { signUp } = useAuth();
 
@@ -19,7 +24,7 @@ const SignUpForm: React.FC = () => {
 
   const [singUpError, setSingUpError] = useState<string | undefined>(undefined);
 
-  const intialFormikValues: SingUpDataType = {
+  const initialFormikValues: SingUpDataType = {
     name: '',
     email: '',
     password: '',
@@ -47,18 +52,24 @@ const SignUpForm: React.FC = () => {
 
   const formik = useFormik({
     validateOnMount: true,
-    initialValues: intialFormikValues,
+    initialValues: initialFormikValues,
     validationSchema: signUpValidationSchema,
     onSubmit: handleSubmit,
   });
+
+  const handleDone = () => {
+    if (formik.errors) {
+      console.log(formik.errors);
+      return;
+    }
+    formik.submitForm();
+  };
 
   return (
     <form onSubmit={formik.handleSubmit}>
       <SignFormStyled>
         <InputArea>
-          <Label htmlFor="name" $color={textColorBlack}>
-            name
-          </Label>
+          <InputLabel labelFor="name">name</InputLabel>
           <Input
             type="text"
             id="name"
@@ -69,11 +80,9 @@ const SignUpForm: React.FC = () => {
             $borderColor={inputBorderColor}
           />
           {formik.touched.name && formik.errors.name ? (
-            <InputErrorMessage>{formik.errors.name}</InputErrorMessage>
+            <ErrorMessage>{formik.errors.name}</ErrorMessage>
           ) : null}
-          <Label htmlFor="email" $color={textColorBlack}>
-            email
-          </Label>
+          <InputLabel labelFor="email">email</InputLabel>
           <Input
             type="text"
             id="email"
@@ -84,12 +93,9 @@ const SignUpForm: React.FC = () => {
             $borderColor={inputBorderColor}
           />
           {formik.touched.email && formik.errors.email ? (
-            <InputErrorMessage>{formik.errors.email}</InputErrorMessage>
+            <ErrorMessage>{formik.errors.email}</ErrorMessage>
           ) : null}
-
-          <Label htmlFor="password" $color={textColorBlack}>
-            password
-          </Label>
+          <InputLabel labelFor="password">password</InputLabel>
           <Input
             type="password"
             id="password"
@@ -100,11 +106,9 @@ const SignUpForm: React.FC = () => {
             $borderColor={inputBorderColor}
           />
           {formik.touched.password && formik.errors.password ? (
-            <InputErrorMessage>{formik.errors.password}</InputErrorMessage>
+            <ErrorMessage>{formik.errors.password}</ErrorMessage>
           ) : null}
-          <Label htmlFor="confirmedPassword" $color={textColorBlack}>
-            confirm password
-          </Label>
+          <InputLabel labelFor="confirmedPassword">confirm password</InputLabel>
           <Input
             type="password"
             id="confirmedPassword"
@@ -116,17 +120,11 @@ const SignUpForm: React.FC = () => {
           />
           {formik.touched.confirmedPassword &&
           formik.errors.confirmedPassword ? (
-            <InputErrorMessage>
-              {formik.errors.confirmedPassword}
-            </InputErrorMessage>
+            <ErrorMessage>{formik.errors.confirmedPassword}</ErrorMessage>
           ) : null}
         </InputArea>
-        {singUpError && <InputErrorMessage>{singUpError}</InputErrorMessage>}
-        <Button
-          type="submit"
-          onClick={() => formik.submitForm()}
-          disabled={!formik.isValid}
-        >
+        {singUpError && <ErrorMessage>{singUpError}</ErrorMessage>}
+        <Button type="submit" onClick={handleDone}>
           sign up
         </Button>
       </SignFormStyled>

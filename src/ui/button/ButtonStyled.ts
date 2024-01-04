@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { black, gray80, white } from '#styles/colorsConstants';
 
 export const ButtonStyled = styled.button<{
   $width: string | undefined;
   $bgColor: string;
   $color: string;
   $bgHoverColor: string;
+  $darkDisabledColor: string;
 }>`
   all: unset;
   width: ${(props) => (props.$width ? props.$width : '')};

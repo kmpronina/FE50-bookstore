@@ -1,5 +1,5 @@
-import useThemeColors from '#hooks/useThemeColors';
 import React, { PropsWithChildren } from 'react';
+import useThemeColors from '#hooks/useThemeColors';
 import { ButtonStyled } from './ButtonStyled';
 
 interface Props extends PropsWithChildren {
@@ -12,8 +12,12 @@ interface Props extends PropsWithChildren {
 const Button: React.FC<Props> = (props) => {
   const { children, onClick, type, width, disabled } = props;
 
-  const { buttonBgColor, buttonTextColor, buttonBgHoverColor } =
-    useThemeColors();
+  const {
+    buttonBgColor,
+    buttonTextColor,
+    buttonBgHoverColor,
+    reverseButtonHoverColor,
+  } = useThemeColors();
 
   return (
     <ButtonStyled
@@ -23,6 +27,7 @@ const Button: React.FC<Props> = (props) => {
       $bgColor={buttonBgColor}
       $color={buttonTextColor}
       $bgHoverColor={buttonBgHoverColor}
+      $darkDisabledColor={reverseButtonHoverColor}
       disabled={disabled}
     >
       {children}

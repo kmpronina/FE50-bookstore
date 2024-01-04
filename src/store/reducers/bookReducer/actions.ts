@@ -38,18 +38,3 @@ export const getSearchResultDataAction =
     if (!searchResultData) return;
     dispatch(setSearchResultToStore(searchResultData));
   };
-
-// export const setNewBooksDataToStore = (booksData: ResponseNewBooksDataType) => {
-//   return {
-//     type: BookReducerEnum.SET_BOOKS_DATA_TO_STORE,
-//     booksData,
-//   };
-// };
-
-// export const setActiveBookByISBN = (activeBookISBN: string) => {
-//   return { type: BookReducerEnum.SET_ACTIVE_BOOK_BY_ISBN, activeBookISBN };
-// };
-
-// export const setActiveBookInfo = (activeBookInfo: ActiveBookInfoType) => {
-//   return { type: BookReducerEnum.SET_ACTIVE_BOOK_INFO, activeBookInfo };
-// };

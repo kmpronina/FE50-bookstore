@@ -1,7 +1,8 @@
 import React from 'react';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
-import { Box, IconButton, List, ListItem } from '@mui/material';
+import { IconButton, List, ListItem } from '@mui/material';
 import useThemeColors from '#hooks/useThemeColors';
+import { NumbersWrapper } from './PaginationStyled';
 
 interface Props {
   onPageChange: (newPage: number) => void;
@@ -9,6 +10,10 @@ interface Props {
   totalBooksCount: number;
   rowsPerPage: number;
 }
+
+export const TotalCountOfPages = (total: number, rows: number): number => {
+  return Math.ceil(total / rows) <= 100 ? Math.ceil(total / rows) : 100;
+};
 
 const Pagination: React.FC<Props> = (props) => {
   const { onPageChange, activePage, totalBooksCount, rowsPerPage } = props;
@@ -37,11 +42,6 @@ const Pagination: React.FC<Props> = (props) => {
     lineHeight: '24px',
   };
 
-  const TotalCountOfPages =
-    Math.ceil(totalBooksCount / rowsPerPage) <= 100
-      ? Math.ceil(totalBooksCount / rowsPerPage)
-      : 100;
-
   const pageNumbersToShow = (i: number) => {
     const set = new Set([
       1,
@@ -49,8 +49,8 @@ const Pagination: React.FC<Props> = (props) => {
       i - 1,
       i,
       i + 1,
-      TotalCountOfPages - 1,
-      TotalCountOfPages,
+      TotalCountOfPages(totalBooksCount, rowsPerPage) - 1,
+      TotalCountOfPages(totalBooksCount, rowsPerPage),
     ]);
     set.forEach((element) => {
       if (element <= 0) {
@@ -82,8 +82,8 @@ const Pagination: React.FC<Props> = (props) => {
           <ArrowBack /> Prev
         </IconButton>
       </ListItem>
-      <Box sx={{ display: 'flex' }}>
-        {Array.from({ length: TotalCountOfPages })
+      <NumbersWrapper>
+        {Array.from({ length: TotalCountOfPages(totalBooksCount, rowsPerPage) })
           .map((_, index) => (
             <ListItem key={index + 1}>
               <IconButton
@@ -110,12 +110,14 @@ const Pagination: React.FC<Props> = (props) => {
             </ListItem>
           ))
           .filter((_, index) => pageNumbersToShow(activePage).has(index + 1))}
-      </Box>
+      </NumbersWrapper>
       <ListItem key={101} sx={{ justifyContent: 'flex-end' }}>
         <IconButton
           onClick={handleForwardClick}
           sx={buttonStyle}
-          disabled={activePage === TotalCountOfPages}
+          disabled={
+            activePage === TotalCountOfPages(totalBooksCount, rowsPerPage)
+          }
         >
           Next
           <ArrowForward />
