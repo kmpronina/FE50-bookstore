@@ -35,7 +35,7 @@ export const InputWrapperForBigScreen = styled.div`
   }
 `;
 
-export const InteractionArea = styled.div`
+export const InteractionArea = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -44,6 +44,8 @@ export const InteractionArea = styled.div`
     display: none;
   }
 `;
+
+export const NavButtonWrapper = styled.a``;
 
 export const SmallMenuWrapper = styled.div`
   @media screen and (min-width: 768px) {

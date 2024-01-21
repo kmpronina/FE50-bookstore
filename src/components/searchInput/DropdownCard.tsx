@@ -13,7 +13,7 @@ import {
 const Highlight = (props: { value: string; str: string }) => {
   const { value, str } = props;
   if (!value) {
-    return <></>;
+    return <>{str}</>;
   }
   const regexp = new RegExp(value, 'ig');
   const matchValue = str.match(regexp);
@@ -23,20 +23,22 @@ const Highlight = (props: { value: string; str: string }) => {
         {str.split(regexp).map((s: string, index: number, array: string[]) => {
           if (index < array.length - 1) {
             const matchWord = matchValue.shift();
-            return (
-              <>
-                {s}
-                <BookTitleBold>{matchWord}</BookTitleBold>
-                {str}
-              </>
-            );
+            if (matchWord) {
+              return (
+                <>
+                  {s}
+                  <BookTitleBold>{matchWord}</BookTitleBold>
+                  {str.split(matchWord)[1]}
+                </>
+              );
+            }
+            return <>{str}</>;
           }
-          return <></>;
         })}
       </>
     );
   }
-  return <></>;
+  return <>{str}</>;
 };
 
 interface Props {

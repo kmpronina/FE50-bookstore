@@ -1,5 +1,11 @@
 import styled from 'styled-components';
-import { blue, green, orange, purple } from '#styles/colorsConstants';
+import {
+  blue,
+  ColorsEnum,
+  green,
+  orange,
+  purple,
+} from '#styles/colorsConstants';
 
 export const BookCardStyled = styled.div`
   width: 352px;
@@ -16,6 +22,7 @@ export const BookCardStyled = styled.div`
 `;
 
 export const ClickableArea = styled.div`
+  all: unset;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -33,11 +40,11 @@ export const ImgWrapper = styled.div<{ $color: string }>`
   align-items: center;
   margin-bottom: 20px;
   background-color: ${(props) =>
-    props.$color === 'green'
+    props.$color === ColorsEnum.green
       ? green
-      : props.$color === 'blue'
+      : props.$color === ColorsEnum.blue
       ? blue
-      : props.$color === 'orange'
+      : props.$color === ColorsEnum.orange
       ? orange
       : purple};
 `;

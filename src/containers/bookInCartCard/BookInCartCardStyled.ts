@@ -1,5 +1,11 @@
 import styled from 'styled-components';
-import { blue, orange, purple, green } from '#styles/colorsConstants';
+import {
+  blue,
+  orange,
+  purple,
+  green,
+  ColorsEnum,
+} from '#styles/colorsConstants';
 
 export const BookInCartCardWrapper = styled.div`
   width: 100%;
@@ -43,7 +49,7 @@ export const InfoWrapper = styled.div`
 `;
 
 export const ImgWrapper = styled.div<{
-  $bgColor: 'blue' | 'orange' | 'purple' | 'green';
+  $bgColor: string;
 }>`
   width: 20%;
   cursor: pointer;
@@ -53,11 +59,11 @@ export const ImgWrapper = styled.div<{
   align-items: center;
   transition: 0.2s;
   background-color: ${(props) =>
-    props.$bgColor === 'blue'
+    props.$bgColor === ColorsEnum.blue
       ? blue
-      : props.$bgColor === 'orange'
+      : props.$bgColor === ColorsEnum.orange
       ? orange
-      : props.$bgColor === 'purple'
+      : props.$bgColor === ColorsEnum.purple
       ? purple
       : green};
 

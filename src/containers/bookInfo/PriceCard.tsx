@@ -91,7 +91,11 @@ const PriceCard: React.FC<Props> = (props) => {
           : 'add to cart'}
       </Button>
       {linkToBook !== null && (
-        <LinkToChapter href={linkToBook} $color={textColorBlack}>
+        <LinkToChapter
+          href={linkToBook}
+          $color={textColorBlack}
+          target="_blank"
+        >
           preview book
         </LinkToChapter>
       )}

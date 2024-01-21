@@ -7,6 +7,7 @@ import {
   SearchResultDataType,
   ResponseSearchResultDataType,
 } from '#models/bookTypes';
+import { ColorsEnum } from '#styles/colorsConstants';
 import { api, mockSubtitle } from './constants';
 
 const random = () => {
@@ -31,13 +32,13 @@ export const getBooksData = async (): Promise<BookDataType | false> => {
       url: book.url,
       rating: random(),
       color:
-        random() > 3
-          ? 'blue'
+        random() > 2
+          ? ColorsEnum.blue
           : random() > 5
-          ? 'green'
+          ? ColorsEnum.green
           : random() > 7
-          ? 'green'
-          : 'purple',
+          ? ColorsEnum.orange
+          : ColorsEnum.purple,
     })),
   };
   return customData;
@@ -67,13 +68,13 @@ export const getActiveBookInfo = async (
     url: data.url,
     pdf: data.pdf,
     color:
-      random() > 3
-        ? 'blue'
+      random() > 2
+        ? ColorsEnum.blue
         : random() > 5
-        ? 'green'
+        ? ColorsEnum.green
         : random() > 7
-        ? 'green'
-        : 'purple',
+        ? ColorsEnum.orange
+        : ColorsEnum.purple,
     numberOfItemsInCart: 0,
   };
   return customData;
@@ -99,13 +100,13 @@ export const getSearchResultData = async (
       url: book.url,
       rating: random(),
       color:
-        random() > 3
-          ? 'blue'
+        random() > 2
+          ? ColorsEnum.blue
           : random() > 5
-          ? 'green'
+          ? ColorsEnum.green
           : random() > 7
-          ? 'green'
-          : 'purple',
+          ? ColorsEnum.orange
+          : ColorsEnum.purple,
     })),
   };
   return customData;

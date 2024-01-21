@@ -1,5 +1,11 @@
 import styled from 'styled-components';
-import { blue, green, orange, purple } from '#styles/colorsConstants';
+import {
+  blue,
+  ColorsEnum,
+  green,
+  orange,
+  purple,
+} from '#styles/colorsConstants';
 
 export const SearchWrapper = styled.div`
   position: relative;
@@ -66,11 +72,11 @@ export const SearchedBookImageWrapper = styled.div<{ $bgColor: string }>`
   width: 80px;
   height: 60px;
   background-color: ${(props) =>
-    props.$bgColor === 'green'
+    props.$bgColor === ColorsEnum.green
       ? green
-      : props.$bgColor === 'blue'
+      : props.$bgColor === ColorsEnum.blue
       ? blue
-      : props.$bgColor === 'orange'
+      : props.$bgColor === ColorsEnum.orange
       ? orange
       : purple};
   padding: 5px;
