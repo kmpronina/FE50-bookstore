@@ -1,11 +1,11 @@
 import React from 'react';
 import { useAppSelector } from '#store/store';
-import { FavoriteBooksModuleStyled } from './FavoriteBooksModuleStyled';
 import { ActiveBookInfoType } from '#models/bookTypes';
 import FavoriteBookCard from '#containers/favoriteBookCard';
-import GoBackButton from '#ui/goBackButton';
 import PageTitle from '#components/pageTitle';
+import GoBackButton from '#ui/goBackButton';
 import InfoMessage from '#ui/infoMessage';
+import { FavoriteBooksModuleStyled } from './FavoriteBooksModuleStyled';
 
 const FavoriteBooksModule: React.FC = () => {
   const { favoriteBooks } = useAppSelector((state) => state.bookReducer);

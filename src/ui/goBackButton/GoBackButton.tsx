@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { IconButton, Tooltip } from '@mui/material';
 import { KeyboardBackspace } from '@mui/icons-material';
 import useThemeColors from '#hooks/useThemeColors';
-import { RouterLocationsEnum } from '#router/Router';
 
 const GoBackButton: React.FC = () => {
   const navigation = useNavigate();
@@ -11,7 +10,7 @@ const GoBackButton: React.FC = () => {
   const { titleColor } = useThemeColors();
 
   const handleGoBack = () => {
-    navigation(RouterLocationsEnum.main);
+    navigation(-1);
   };
 
   return (

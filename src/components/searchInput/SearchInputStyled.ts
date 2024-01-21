@@ -1,9 +1,15 @@
 import styled from 'styled-components';
-import { blue, green, orange, purple } from '#styles/colorsConstants';
+import {
+  blue,
+  ColorsEnum,
+  green,
+  orange,
+  purple,
+} from '#styles/colorsConstants';
 
 export const SearchWrapper = styled.div`
   position: relative;
-  width: 50%;
+  width: 100%;
 `;
 
 export const SearchInputStyled = styled.div<{
@@ -40,6 +46,7 @@ export const DropWrapper = styled.div<{
 
 export const SearchedBooksDropWrapper = styled.ul`
   all: unset;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -47,23 +54,29 @@ export const SearchedBooksDropWrapper = styled.ul`
   margin-bottom: 5px;
 `;
 
-export const SearchedBookCard = styled.li`
+export const SearchedBookCard = styled.li<{ $bgColor: string }>`
   all: unset;
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 10px;
   cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    background-color: ${(props) => props.$bgColor};
+  }
 `;
 
 export const SearchedBookImageWrapper = styled.div<{ $bgColor: string }>`
   width: 80px;
   height: 60px;
   background-color: ${(props) =>
-    props.$bgColor === 'green'
+    props.$bgColor === ColorsEnum.green
       ? green
-      : props.$bgColor === 'blue'
+      : props.$bgColor === ColorsEnum.blue
       ? blue
-      : props.$bgColor === 'orange'
+      : props.$bgColor === ColorsEnum.orange
       ? orange
       : purple};
   padding: 5px;
@@ -83,10 +96,10 @@ export const BookTitleWrapper = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   display: flex;
-  /* flex-wrap: wrap; */
   align-items: center;
   gap: 0px;
 `;
+
 export const BookTitle = styled.p`
   display: inline;
   font-weight: 400;
@@ -113,9 +126,11 @@ export const GoToSearchResultButton = styled.button<{
   line-height: 42px;
   word-wrap: break-word;
   transition: 0.2s;
+
   &:hover {
     background-color: ${(props) => props.$hoverBgColor};
   }
+
   &:active {
     background-color: ${(props) => props.$bgColor};
   }

@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 import {
   blue,
+  ColorsEnum,
   green,
   orange,
   purple,
-  gray60,
-  black,
 } from '#styles/colorsConstants';
 
 export const BookCardStyled = styled.div`
@@ -16,9 +15,14 @@ export const BookCardStyled = styled.div`
   align-items: start;
   margin: 0 5px;
   margin-bottom: 20px;
+
+  @media screen and (max-width: 1200px) {
+    width: 328px;
+  }
 `;
 
 export const ClickableArea = styled.div`
+  all: unset;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -27,6 +31,7 @@ export const ClickableArea = styled.div`
   margin: 0 5px;
   cursor: pointer;
 `;
+
 export const ImgWrapper = styled.div<{ $color: string }>`
   width: 100%;
   height: 264px;
@@ -35,11 +40,11 @@ export const ImgWrapper = styled.div<{ $color: string }>`
   align-items: center;
   margin-bottom: 20px;
   background-color: ${(props) =>
-    props.$color === 'green'
+    props.$color === ColorsEnum.green
       ? green
-      : props.$color === 'blue'
+      : props.$color === ColorsEnum.blue
       ? blue
-      : props.$color === 'orange'
+      : props.$color === ColorsEnum.orange
       ? orange
       : purple};
 `;
@@ -50,7 +55,7 @@ export const BookImg = styled.img`
   object-fit: contain;
 `;
 
-export const BookTitle = styled.h4`
+export const BookTitle = styled.h4<{ $color: string }>`
   all: unset;
   font-family: 'Bebas Neue';
   font-size: 24px;
@@ -60,15 +65,15 @@ export const BookTitle = styled.h4`
   margin-bottom: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: ${black};
+  color: ${(props) => props.$color};
 `;
 
-export const BookSubtitle = styled.span`
+export const BookSubtitle = styled.span<{ $color: string }>`
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
   margin-bottom: 10px;
-  color: ${gray60};
+  color: ${(props) => props.$color};
   height: 72px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -81,10 +86,10 @@ export const InfoArea = styled.div`
   align-items: center;
 `;
 
-export const BookPrice = styled.span`
+export const BookPrice = styled.span<{ $color: string }>`
   font-size: 24px;
   font-family: 'Bebas Neue';
   font-weight: 700;
   line-height: 32px;
-  color: ${black};
+  color: ${(props) => props.$color};
 `;

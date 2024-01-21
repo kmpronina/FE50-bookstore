@@ -1,5 +1,11 @@
 import styled from 'styled-components';
-import { blue, orange, purple, green } from '#styles/colorsConstants';
+import {
+  blue,
+  orange,
+  purple,
+  green,
+  ColorsEnum,
+} from '#styles/colorsConstants';
 
 export const FavoriteBookCardWrapper = styled.div`
   width: 100%;
@@ -16,18 +22,29 @@ export const FavoriteBookCardStyled = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 48px;
+
+  @media screen and (max-width: 650px) {
+    width: 50%;
+  }
 `;
 
 export const InfoWrapper = styled.div`
-  width: 75%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+  margin-bottom: 48px;
+
+  @media screen and (max-width: 650px) {
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 24px;
+  }
 `;
 
 export const ImgWrapper = styled.div<{
-  $bgColor: 'blue' | 'orange' | 'purple' | 'green';
+  $bgColor: string;
 }>`
   width: 20%;
   cursor: pointer;
@@ -37,13 +54,17 @@ export const ImgWrapper = styled.div<{
   align-items: center;
   transition: 0.2s;
   background-color: ${(props) =>
-    props.$bgColor === 'blue'
+    props.$bgColor === ColorsEnum.blue
       ? blue
-      : props.$bgColor === 'orange'
+      : props.$bgColor === ColorsEnum.orange
       ? orange
-      : props.$bgColor === 'purple'
+      : props.$bgColor === ColorsEnum.purple
       ? purple
       : green};
+
+  @media screen and (max-width: 650px) {
+    width: 50%;
+  }
 `;
 
 export const BookImg = styled.img`
@@ -58,6 +79,10 @@ export const TextInfoWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: start;
+
+  @media screen and (max-width: 500px) {
+    width: 75%;
+  }
 `;
 
 export const BookTitle = styled.h4<{ $color: string }>`
@@ -70,6 +95,10 @@ export const BookTitle = styled.h4<{ $color: string }>`
   word-wrap: break-word;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media screen and (max-width: 992px) {
+    font-size: 20px;
+  }
 `;
 
 export const BookDescription = styled.span<{ $color: string }>`
@@ -81,6 +110,11 @@ export const BookDescription = styled.span<{ $color: string }>`
   margin-bottom: 24px;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media screen and (max-width: 992px) {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
 `;
 
 export const BookNumbers = styled.div`
@@ -98,6 +132,27 @@ export const Price = styled.span<{ $color: string }>`
   font-family: 'Bebas Neue';
   font-weight: 700;
   line-height: 60px;
+
+  @media screen and (max-width: 992px) {
+    font-size: 24px;
+  }
+`;
+
+export const LikeButtonWrapper = styled.div`
+  @media screen and (max-width: 650px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 5px;
+    right: 20%;
+  }
+
+  @media screen and (max-width: 500px) {
+    position: absolute;
+    top: 5px;
+    right: 15%;
+  }
 `;
 
 export const LikeButton = styled.button<{
@@ -110,7 +165,13 @@ export const LikeButton = styled.button<{
   color: ${(props) => props.$red};
   border-radius: 50%;
   transition: 0.2s;
+
   &:hover {
     color: ${(props) => props.$hoverColor};
+  }
+
+  @media screen and (max-width: 650px) {
+    background-color: ${(props) => props.$hoverColor};
+    padding: 10px;
   }
 `;

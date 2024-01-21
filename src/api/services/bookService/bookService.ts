@@ -7,13 +7,15 @@ import {
   SearchResultDataType,
   ResponseSearchResultDataType,
 } from '#models/bookTypes';
+import { ColorsEnum } from '#styles/colorsConstants';
+import { api, mockSubtitle } from './constants';
 
 const random = () => {
   return Math.floor(Math.random() * 10);
 };
 
 export const getBooksData = async (): Promise<BookDataType | false> => {
-  const rawData = await fetch('https://api.itbook.store/1.0/new');
+  const rawData = await fetch(`${api}new`);
   const data: ResponseNewBooksDataType = await rawData.json();
   if (!data) return false;
   const { error, total, books } = data;
@@ -23,20 +25,20 @@ export const getBooksData = async (): Promise<BookDataType | false> => {
     total: total,
     books: books.map((book: BookTypeFromResponse) => ({
       title: book.title,
-      subtitle: book.subtitle ? book.subtitle : 'by Lentin Joseph, Apress 2018',
+      subtitle: book.subtitle ? book.subtitle : mockSubtitle,
       isbn13: book.isbn13,
       price: book.price,
       image: book.image,
       url: book.url,
       rating: random(),
       color:
-        random() > 3
-          ? 'blue'
+        random() > 2
+          ? ColorsEnum.blue
           : random() > 5
-          ? 'green'
+          ? ColorsEnum.green
           : random() > 7
-          ? 'green'
-          : 'purple',
+          ? ColorsEnum.orange
+          : ColorsEnum.purple,
     })),
   };
   return customData;
@@ -45,14 +47,14 @@ export const getBooksData = async (): Promise<BookDataType | false> => {
 export const getActiveBookInfo = async (
   isbn: string
 ): Promise<ActiveBookInfoType | false> => {
-  const rawData = await fetch(`https://api.itbook.store/1.0/books/${isbn}`);
+  const rawData = await fetch(`${api}books/${isbn}`);
   const data: ActiveBookInfoFromResponseType = await rawData.json();
   if (!data) return false;
 
   const customData: ActiveBookInfoType = {
     error: data.error,
     title: data.title,
-    subtitle: data.subtitle ? data.subtitle : 'by Lentin Joseph, Apress 2018',
+    subtitle: data.subtitle ? data.subtitle : mockSubtitle,
     authors: data.authors,
     publisher: data.publisher,
     isbn10: data.isbn10,
@@ -66,13 +68,13 @@ export const getActiveBookInfo = async (
     url: data.url,
     pdf: data.pdf,
     color:
-      random() > 3
-        ? 'blue'
+      random() > 2
+        ? ColorsEnum.blue
         : random() > 5
-        ? 'green'
+        ? ColorsEnum.green
         : random() > 7
-        ? 'green'
-        : 'purple',
+        ? ColorsEnum.orange
+        : ColorsEnum.purple,
     numberOfItemsInCart: 0,
   };
   return customData;
@@ -82,32 +84,29 @@ export const getSearchResultData = async (
   searchString: string,
   activePage: string
 ): Promise<SearchResultDataType | false> => {
-  const rawData = await fetch(
-    `https://api.itbook.store/1.0/search/${searchString}/${activePage}`
-  );
+  const rawData = await fetch(`${api}search/${searchString}/${activePage}`);
   const data: ResponseSearchResultDataType = await rawData.json();
   if (!data) return false;
-  console.log('data fron service', data);
   const { page, total, books } = data;
   const customData: SearchResultDataType = {
     page: page,
     total: total,
     books: books.map((book: BookTypeFromResponse) => ({
       title: book.title,
-      subtitle: book.subtitle ? book.subtitle : 'by Lentin Joseph, Apress 2018',
+      subtitle: book.subtitle ? book.subtitle : mockSubtitle,
       isbn13: book.isbn13,
       price: book.price,
       image: book.image,
       url: book.url,
       rating: random(),
       color:
-        random() > 3
-          ? 'blue'
+        random() > 2
+          ? ColorsEnum.blue
           : random() > 5
-          ? 'green'
+          ? ColorsEnum.green
           : random() > 7
-          ? 'green'
-          : 'purple',
+          ? ColorsEnum.orange
+          : ColorsEnum.purple,
     })),
   };
   return customData;

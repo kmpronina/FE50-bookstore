@@ -10,6 +10,7 @@ const Slider: React.FC = () => {
   const { booksData, activeBookISBN } = useAppSelector(
     (state) => state.bookReducer
   );
+
   const { textColorBlack } = useThemeColors();
 
   return (

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { purple, black, gray60, gray80, white } from '#styles/colorsConstants';
+import { purple, black, gray60, gray80 } from '#styles/colorsConstants';
 
 export const SubscribeToNewsletterStyled = styled.div`
   background-color: ${purple};
@@ -17,6 +17,10 @@ export const SubscribeTitle = styled.span`
   font-family: 'Bebas Neue';
   font-weight: 700;
   line-height: 60px;
+
+  @media screen and (max-width: 450px) {
+    font-size: 28px;
+  }
 `;
 
 export const SubscribeSubtitle = styled.span`
@@ -24,6 +28,10 @@ export const SubscribeSubtitle = styled.span`
   color: ${gray60};
   font-weight: 400;
   line-height: 28px;
+
+  @media screen and (max-width: 450px) {
+    font-size: 16px;
+  }
 `;
 
 export const EmailArea = styled.div`
@@ -31,20 +39,33 @@ export const EmailArea = styled.div`
   border-radius: 4px;
   display: flex;
   gap: 0px;
+  flex-wrap: nowrap;
+
+  @media screen and (max-width: 700px) {
+    flex-direction: column;
+  }
 `;
 
-export const EmailInput = styled.input`
- all:unset;
- background-color: ${white};
-border: 1px solid ${gray60};
-border-right: none;
-padding: 15px;
-border-radius: 0px;
-font-size: 14px;
-font-weight: 400;
-line-height: 24px;
-width: calc(100% - 147px - 128px);
-&:focus {
-border: 1px solid ${gray80}
-},
+export const EmailInput = styled.input<{ $bgColor: string; $color: string }>`
+  all: unset;
+  border: 1px solid ${gray60};
+  border-right: none;
+  padding: 15px;
+  border-radius: 0px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 24px;
+  background-color: ${(props) => props.$bgColor};
+  color: ${(props) => props.$color};
+  width: calc(100% - 147px - 128px);
+
+  &:focus {
+    border: 1px solid ${gray80};
+  }
+
+  @media screen and (max-width: 700px) {
+    width: calc(100% - 32px);
+    border: 1px solid ${gray60};
+    margin-bottom: 15px;
+  }
 `;

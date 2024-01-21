@@ -1,6 +1,7 @@
 import React from 'react';
 import PageTitle from '#components/pageTitle';
 import GoBackButton from '#ui/goBackButton';
+import AccountForm from '#containers/accountForm';
 import { AccountModuleStyled } from './AccountModuleStyled';
 
 const AccountModule: React.FC = () => {
@@ -8,6 +9,7 @@ const AccountModule: React.FC = () => {
     <AccountModuleStyled>
       <GoBackButton />
       <PageTitle>account</PageTitle>
+      <AccountForm />
     </AccountModuleStyled>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import useThemeColors from '#hooks/useThemeColors';
 import { BookType } from '#models/bookTypes';
 import {
   BookImage,
@@ -9,28 +10,35 @@ import {
   SearchedBookImageWrapper,
 } from './SearchInputStyled';
 
-const Highlight = (props: any) => {
+const Highlight = (props: { value: string; str: string }) => {
   const { value, str } = props;
   if (!value) {
-    return str;
+    return <>{str}</>;
   }
   const regexp = new RegExp(value, 'ig');
   const matchValue = str.match(regexp);
   if (matchValue) {
-    return str.split(regexp).map((s: any, index: any, array: any) => {
-      if (index < array.length - 1) {
-        const matchWord = matchValue.shift();
-        return (
-          <>
-            {s}
-            <BookTitleBold>{matchWord}</BookTitleBold>
-          </>
-        );
-      }
-      return s;
-    });
+    return (
+      <>
+        {str.split(regexp).map((s: string, index: number, array: string[]) => {
+          if (index < array.length - 1) {
+            const matchWord = matchValue.shift();
+            if (matchWord) {
+              return (
+                <>
+                  {s}
+                  <BookTitleBold>{matchWord}</BookTitleBold>
+                  {str.split(matchWord)[1]}
+                </>
+              );
+            }
+            return <>{str}</>;
+          }
+        })}
+      </>
+    );
   }
-  return str;
+  return <>{str}</>;
 };
 
 interface Props {
@@ -41,6 +49,8 @@ interface Props {
 const DropdownCard: React.FC<Props> = (props) => {
   const { book, searchValue } = props;
 
+  const { inputBgActiveColor } = useThemeColors();
+
   const boldText = useCallback(
     (str: string) => {
       return <Highlight value={searchValue} str={str} />;
@@ -49,11 +59,10 @@ const DropdownCard: React.FC<Props> = (props) => {
   );
 
   return (
-    <SearchedBookCard>
+    <SearchedBookCard $bgColor={inputBgActiveColor}>
       <SearchedBookImageWrapper $bgColor={book.color}>
         <BookImage src={book.image} alt="book" />
       </SearchedBookImageWrapper>
-
       <BookTitleWrapper>
         <BookTitle>{boldText(book.title)}</BookTitle>
       </BookTitleWrapper>

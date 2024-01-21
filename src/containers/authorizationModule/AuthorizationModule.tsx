@@ -1,7 +1,7 @@
 import React from 'react';
+import useThemeColors from '#hooks/useThemeColors';
 import { setIsSignUpActive } from '#store/reducers/userReducer';
 import { useAppDispatch, useAppSelector } from '#store/store';
-import useThemeColors from '#hooks/useThemeColors';
 import SignInForm from '#containers/signInForm';
 import SignUpForm from '#containers/signUpForm';
 import {
@@ -14,6 +14,7 @@ import {
 
 const AuthorizationModule: React.FC = () => {
   const { activeSignTab } = useAppSelector((state) => state.userReducer);
+
   const { textColorBlack, textColorGray } = useThemeColors();
 
   const dispatch = useAppDispatch();

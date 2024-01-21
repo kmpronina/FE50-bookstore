@@ -1,4 +1,3 @@
-import { black } from '#styles/colorsConstants';
 import styled from 'styled-components';
 
 export const HeaderWrapper = styled.header`
@@ -18,18 +17,38 @@ export const HeaderStyled = styled.div`
   margin-bottom: 24px;
 `;
 
-export const HeaderTitle = styled.h1`
+export const HeaderTitle = styled.h1<{ $color: string }>`
   all: unset;
   font-family: 'Bebas Neue';
   font-size: 36px;
   font-weight: 700;
   line-height: 44px;
   cursor: pointer;
-  color: ${black};
+  color: ${(props) => props.$color};
 `;
 
-export const InteractionArea = styled.div`
+export const InputWrapperForBigScreen = styled.div`
+  width: 50%;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+`;
+
+export const InteractionArea = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+`;
+
+export const NavButtonWrapper = styled.a``;
+
+export const SmallMenuWrapper = styled.div`
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
 `;

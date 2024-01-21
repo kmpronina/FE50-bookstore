@@ -1,18 +1,11 @@
 import md5 from 'md5';
+import { useAppDispatch } from '#store/store';
+import { setActiveUser } from '#store/reducers/userReducer';
 import {
   SignInDataType,
   UserType,
   SingUpDataType,
 } from '#models/authorizationTypes';
-import { useAppDispatch } from '#store/store';
-import { setActiveUser } from '#store/reducers/userReducer';
-
-// type UserDataHash = {
-//   emailHash: string;
-//   passwordHash: string;
-//   nameHash: string;
-//   id: string
-// };
 
 type AuthMethodsReturnType = {
   isSuccess: boolean;
@@ -23,6 +16,7 @@ const useAuth = () => {
   const authUsers: UserType[] = JSON.parse(
     localStorage.getItem('allUsers') || '[]'
   );
+
   const dispatch = useAppDispatch();
 
   const signUp = (data: SingUpDataType): AuthMethodsReturnType => {
@@ -36,6 +30,7 @@ const useAuth = () => {
     if (authUsers.find((userHash) => userHash.email === dataHash.email)) {
       return { isSuccess: false, error: 'user with same email already exist' };
     }
+
     localStorage.setItem('allUsers', JSON.stringify([...authUsers, dataHash]));
     return { isSuccess: true };
   };
@@ -44,6 +39,7 @@ const useAuth = () => {
     const foundUserFromStorage = authUsers.find(
       (user) => user.email === data.email
     );
+
     if (foundUserFromStorage) {
       if (md5(data.password) === foundUserFromStorage.passwordHash) {
         const userData: UserType = {
@@ -58,10 +54,43 @@ const useAuth = () => {
         return { isSuccess: false, error: 'password is not correct' };
       }
     }
+
     return { isSuccess: false, error: 'user not found' };
   };
 
-  return { signIn, signUp };
+  const changeInfo = (data: UserType): AuthMethodsReturnType => {
+    const foundUserFromStorage = authUsers.find((user) => user.id === data.id);
+    console.log('foundUserFromStorage', foundUserFromStorage);
+
+    if (foundUserFromStorage) {
+      const restUsers = authUsers.filter((user) => user.id !== data.id);
+
+      if (restUsers.find((userHash) => userHash.email === data.email)) {
+        return {
+          isSuccess: false,
+          error: 'user with same email already exist',
+        };
+      }
+
+      const editedUser: UserType = {
+        id: data.id,
+        name: data.name,
+        passwordHash: data.passwordHash,
+        email: data.email,
+      };
+
+      dispatch(setActiveUser(editedUser));
+      localStorage.setItem(
+        'allUsers',
+        JSON.stringify([...restUsers, editedUser])
+      );
+      return { isSuccess: true };
+    } else {
+      return { isSuccess: false, error: 'user not found' };
+    }
+  };
+
+  return { signIn, signUp, changeInfo };
 };
 
 export default useAuth;

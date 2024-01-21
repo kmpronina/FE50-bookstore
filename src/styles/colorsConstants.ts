@@ -9,3 +9,10 @@ export const blue = '#D7E4FD';
 export const green = '#CAEFF0';
 export const orange = '#FEE9E2';
 export const purple = '#F4EEFD';
+
+export enum ColorsEnum {
+  blue = 'blue',
+  green = 'green',
+  orange = 'orange',
+  purple = 'purple',
+}

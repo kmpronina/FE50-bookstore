@@ -1,5 +1,11 @@
 import styled from 'styled-components';
-import { blue, orange, purple, green } from '#styles/colorsConstants';
+import {
+  blue,
+  orange,
+  purple,
+  green,
+  ColorsEnum,
+} from '#styles/colorsConstants';
 
 export const BookInCartCardWrapper = styled.div`
   width: 100%;
@@ -8,6 +14,10 @@ export const BookInCartCardWrapper = styled.div`
   justify-content: space-between;
   align-items: start;
   margin-bottom: 48px;
+
+  @media screen and (max-width: 650px) {
+    align-items: center;
+  }
 `;
 
 export const BookInCartCardStyled = styled.div`
@@ -16,6 +26,12 @@ export const BookInCartCardStyled = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 48px;
+
+  @media screen and (max-width: 650px) {
+    flex-direction: column;
+    width: 50%;
+    position: relative;
+  }
 `;
 
 export const InfoWrapper = styled.div`
@@ -24,10 +40,16 @@ export const InfoWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 10px;
+
+  @media screen and (max-width: 650px) {
+    width: 100%;
+    flex-direction: column;
+    margin-bottom: 24px;
+  }
 `;
 
 export const ImgWrapper = styled.div<{
-  $bgColor: 'blue' | 'orange' | 'purple' | 'green';
+  $bgColor: string;
 }>`
   width: 20%;
   cursor: pointer;
@@ -37,13 +59,17 @@ export const ImgWrapper = styled.div<{
   align-items: center;
   transition: 0.2s;
   background-color: ${(props) =>
-    props.$bgColor === 'blue'
+    props.$bgColor === ColorsEnum.blue
       ? blue
-      : props.$bgColor === 'orange'
+      : props.$bgColor === ColorsEnum.orange
       ? orange
-      : props.$bgColor === 'purple'
+      : props.$bgColor === ColorsEnum.purple
       ? purple
       : green};
+
+  @media screen and (max-width: 650px) {
+    width: 75%;
+  }
 `;
 
 export const BookImg = styled.img`
@@ -58,6 +84,10 @@ export const TextInfoWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: start;
+
+  @media screen and (max-width: 650px) {
+    width: 100%;
+  }
 `;
 
 export const BookTitle = styled.h4<{ $color: string }>`
@@ -70,6 +100,10 @@ export const BookTitle = styled.h4<{ $color: string }>`
   word-wrap: break-word;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media screen and (max-width: 992px) {
+    font-size: 20px;
+  }
 `;
 
 export const BookDescription = styled.span<{ $color: string }>`
@@ -81,6 +115,11 @@ export const BookDescription = styled.span<{ $color: string }>`
   margin-bottom: 24px;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media screen and (max-width: 992px) {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
 `;
 
 export const NumbersWrapper = styled.div`
@@ -93,6 +132,15 @@ export const NumbersWrapper = styled.div`
   font-weight: 700;
   line-height: 32px;
   word-wrap: break-word;
+
+  @media screen and (max-width: 992px) {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
+  @media screen and (max-width: 650px) {
+    align-self: center;
+  }
 `;
 
 export const Price = styled.span<{ $color: string }>`
@@ -102,4 +150,25 @@ export const Price = styled.span<{ $color: string }>`
   line-height: 60px;
   word-wrap: break-word;
   color: ${(props) => props.$color};
+
+  @media screen and (max-width: 992px) {
+    font-size: 32px;
+  }
+`;
+
+export const DeleteButtonWrapper = styled.div<{}>`
+  @media screen and (max-width: 650px) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    right: 5px;
+  }
+
+  @media screen and (max-width: 500px) {
+    position: absolute;
+    top: 5px;
+    right: 0px;
+  }
 `;

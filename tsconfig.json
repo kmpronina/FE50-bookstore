@@ -26,7 +26,6 @@
       "#store/*": ["./src/store/*"],
       "#styles/*": ["./src/styles/*"],
       "#constants/*": ["./src/constants/*"],
-      "#utils/*": ["./src/utils/*"],
       "#ui/*": ["./src/ui/*"],
       "#fonts/*": ["./src/fonts/*"],
       "#images/*": ["./src/images/*"]
