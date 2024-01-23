@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Badge, IconButton, Tooltip } from '@mui/material';
 import {
@@ -30,10 +30,6 @@ const Header: React.FC = () => {
   const navigation = useNavigate();
 
   const { iconButtonColor, textColorBlack } = useThemeColors();
-
-  useEffect(() => {
-    console.log(document.location);
-  }, []);
 
   return (
     <HeaderWrapper>
