@@ -7,6 +7,7 @@ import { useDebounce } from '#hooks/useDebounce';
 import { useAppDispatch, useAppSelector } from '#store/store';
 import {
   setActiveBookByISBN,
+  setIsSearchDropdownActive,
   setSearchStringToStore,
 } from '#store/reducers/bookReducer';
 import { getSearchResultDataAction } from '#store/reducers/bookReducer/actions';
@@ -22,9 +23,8 @@ import {
 import DropdownCard from './DropdownCard';
 
 const SearchInput: React.FC = () => {
-  const { searchResultData, searchString } = useAppSelector(
-    (state) => state.bookReducer
-  );
+  const { searchResultData, searchString, isSearchDropdownActive } =
+    useAppSelector((state) => state.bookReducer);
 
   const dispatch = useAppDispatch();
 
@@ -35,7 +35,7 @@ const SearchInput: React.FC = () => {
 
   const [searchValue, setSearchValue] = useState<string>('');
   const [searchedBooks, setSearchedBooks] = useState<BookType[]>([]);
-  const [isDropdownActive, setIsDropdownActive] = useState<boolean>(false);
+  // const [isDropdownActive, setIsDropdownActive] = useState<boolean>(false);
 
   const debouncedValue = useDebounce(searchValue);
 
@@ -56,24 +56,24 @@ const SearchInput: React.FC = () => {
   const handleInputChange = (e: BaseSyntheticEvent) => {
     setSearchValue(e.target.value);
     if (e.target.value === '') {
-      setIsDropdownActive(false);
+      dispatch(setIsSearchDropdownActive(false));
       return;
     }
-    setIsDropdownActive(true);
+    dispatch(setIsSearchDropdownActive(true));
   };
 
   const handleSearchSubmit = () => {
-    setIsDropdownActive(false);
+    dispatch(setIsSearchDropdownActive(false));
     navigation(RouterLocationsEnum.search);
   };
 
   const handleClearSearch = () => {
     setSearchValue('');
-    setIsDropdownActive(false);
+    dispatch(setIsSearchDropdownActive(false));
   };
 
   return (
-    <SearchWrapper>
+    <SearchWrapper id="searchInputWrapper">
       <SearchInputStyled
         $inputBorderColor={inputBorderColor}
         $inputTextColor={inputTextColor}
@@ -89,7 +89,11 @@ const SearchInput: React.FC = () => {
         />
         <IconButton
           type="button"
-          sx={{ p: '10px', color: inputTextColor }}
+          sx={{
+            p: '10px',
+            color: inputTextColor,
+            '&.Mui-disabled': { visibility: 'hidden' },
+          }}
           disabled={!(searchValue.length > 0)}
           onClick={handleClearSearch}
         >
@@ -97,7 +101,11 @@ const SearchInput: React.FC = () => {
         </IconButton>
         <IconButton
           type="button"
-          sx={{ p: '10px', color: inputTextColor }}
+          sx={{
+            p: '10px',
+            color: inputTextColor,
+            '&.Mui-disabled': { visibility: 'hidden' },
+          }}
           aria-label="search"
           disabled={!(searchValue.length > 0)}
           onClick={handleSearchSubmit}
@@ -105,7 +113,7 @@ const SearchInput: React.FC = () => {
           <Search />
         </IconButton>
       </SearchInputStyled>
-      {isDropdownActive && (
+      {isSearchDropdownActive && (
         <DropWrapper $bgColor={inputBgColor} $textColor={inputTextColor}>
           {searchedBooks.length === 0 && (
             <>There are no books for the search term '{searchString}'</>
@@ -116,7 +124,7 @@ const SearchInput: React.FC = () => {
                 <Link
                   to={`/${book.isbn13}`}
                   onClick={() => [
-                    setIsDropdownActive(false),
+                    dispatch(setIsSearchDropdownActive(false)),
                     dispatch(setActiveBookByISBN(book.isbn13)),
                     setSearchValue(''),
                   ]}
