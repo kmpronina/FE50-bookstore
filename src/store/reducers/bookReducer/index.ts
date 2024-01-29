@@ -13,6 +13,7 @@ type BookReducerType = {
   searchResultData: SearchResultDataType | null;
   favoriteBooks: ActiveBookInfoType[];
   booksInCart: ActiveBookInfoType[];
+  isSearchDropdownActive: boolean;
 };
 
 const bookReducer = createSlice({
@@ -25,6 +26,7 @@ const bookReducer = createSlice({
     searchResultData: null,
     favoriteBooks: [],
     booksInCart: [],
+    isSearchDropdownActive: false,
   } as BookReducerType,
 
   reducers: {
@@ -49,6 +51,9 @@ const bookReducer = createSlice({
     setBookInCartToStore: (state, action) => {
       state.booksInCart = action.payload;
     },
+    setIsSearchDropdownActive: (state, action) => {
+      state.isSearchDropdownActive = action.payload;
+    },
   },
 });
 
@@ -60,43 +65,7 @@ export const {
   setSearchResultToStore,
   setFavoriteBookToStore,
   setBookInCartToStore,
+  setIsSearchDropdownActive,
 } = bookReducer.actions;
 
 export default bookReducer.reducer;
-
-// const defaultState: BookReducerType = {
-//   booksData: { books: [], error: '', total: '' },
-//   searchString: '',
-//   activeBookISBN: null,
-//   activeBookInfo: null,
-// };
-
-// const bookReducer: Reducer<BookReducerType> = (
-//   state = defaultState,
-//   action
-// ) => {
-//   switch (action.type) {
-//     case BookReducerEnum.SET_BOOKS_DATA_TO_STORE:
-//       return {
-//         ...state,
-//         booksData: action.payload,
-//       };
-
-//     case BookReducerEnum.SET_ACTIVE_BOOK_BY_ISBN:
-//       return {
-//         ...state,
-//         activeBookISBN: action.activeBookISBN,
-//       };
-
-//     case BookReducerEnum.SET_ACTIVE_BOOK_INFO:
-//       return {
-//         ...state,
-//         activeBookInfo: action.activeBookInfo,
-//       };
-
-//     default:
-//       return { ...state };
-//   }
-// };
-
-// export default bookReducer;
